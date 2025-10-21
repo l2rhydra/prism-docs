@@ -1,0 +1,34 @@
+import Image from 'next/image'
+import {Button} from '../components/Buttons'
+import { ShoppingBag, PlayCircle, Users } from 'lucide-react'
+
+# Prism Scripts Documentation
+<div className='text-lg mt-2'
+    style={{
+        color: 'rgb(185, 198, 162)'
+    }}
+>Prism Scripts Resources Document</div>
+ 
+## Overview
+
+<div className='text-lg mt-5'>
+    This document contains documents regarding all products sold on Prism Scripts Store.
+
+    <span className='flex text-lg mt-3'>
+        We've put together some helpful guides for you to get setup with our product quickly and <br/> easily.
+    </span>
+</div>
+
+### Discord Server
+
+<div className='text-lg mt-5'>
+    If you have questions about our products or want to get support, join our [discord](https://discord.gg/prismscripts).
+</div>
+
+<Image className='mt-7 mb-18' src='/prismmain.png' alt='prism' width={1920} height={384} />
+
+<div className="button-container">
+    <Button href="https://store.prismscripts.net/" icon={<ShoppingBag />}> Tebex Store</Button>
+    <Button href="https://www.youtube.com/@PrismScripts" icon={<PlayCircle />}> Showcase</Button>
+    <Button href="https://discord.gg/prismscripts" icon={<Users />}> Join Community</Button>
+</div>

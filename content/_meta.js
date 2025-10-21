@@ -1,0 +1,84 @@
+import { title } from "process";
+
+
+export default {
+  index: {
+    title: 'Prism Scripts Documentation',
+    theme: {
+      breadcrumb: false,
+      pagination: true,
+      copyPage: false
+    },
+  },
+  assetescrow: {
+    title: 'Fivem Asset Escrow',
+  },
+  '###': {
+    type: 'separator',
+    title: 'Prism Scripts'
+  },
+  pausemenu : {
+    title: '🖼️ Prism Pause Menu',
+    theme: {
+      breadcrumb: false,
+      pagination: true,
+      copyPage: false,
+      collapsed: true
+    },
+  },
+  inventory: {
+    title: '🗃️ Prism Inventory',
+    theme: {
+      breadcrumb: false,
+      pagination: true,
+      copyPage: false,
+      collapsed: true
+    },
+  },
+  loadingscreen: {
+    title: '🔃 Prism Loading Screen',
+    theme: {
+      breadcrumb: false,
+      pagination: true,
+      copyPage: false,
+      collapsed: true
+    },
+  },
+  hudmanager: {
+    title: '🧑‍💻 Prism HUD Manager',
+    theme: {
+      breadcrumb: false,
+      pagination: true,
+      copyPage: false,
+      collapsed: true
+    },
+  },
+  appearance: {
+    title: '🎨 Prism Appearance',
+    theme: {
+      breadcrumb: false,
+      pagination: true,
+      copyPage: false,
+      collapsed: true
+    },
+  },
+  prismui: {
+    title: '🏮 Prism UI',
+    theme: {
+      breadcrumb: false,
+      pagination: true,
+      copyPage: false,
+      collapsed: true
+    },
+  },
+  
+  banking: {
+    title: '🏦 Prism Banking',
+    theme: {
+      breadcrumb: false,
+      pagination: true,
+      copyPage: false,
+      collapsed: true
+    },
+  },
+}

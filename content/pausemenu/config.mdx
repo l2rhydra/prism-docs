@@ -1,0 +1,104 @@
+# Config
+
+<div className='text-lg mt-2'
+    style={{
+        color: 'rgb(185, 198, 162)'
+    }}
+>All Prism Scripts contain various editable and unobscured files containing, exports, client<br/> and server functions, configuration methods and more.</div>
+
+```lua filename="config.lua" copy
+CFG = {
+    Framework = "auto", -- "auto", "esx", "qb", "qbox"
+    Locale = "en", -- Language: en, es, fr, de, pt, ru
+    Debug = true,
+
+    --"qbcore", "qbox", "rcore_gangs", "op-crime", "brutals_gangs", string and custom exports
+    GetGangFunction = "No gang",
+
+    KeyBind = {
+        Command = 'pauseMenu',
+        Key = 'ESCAPE',
+    },
+
+    EnabledCam = true,
+
+    Anim = {
+        Enabled = true,
+        AnimName = "base",
+        DictName = "amb@world_human_tourist_map@male@base",
+        PropName = "prop_tourist_map_01"
+    },
+
+    Style = {
+        primaryColor = "#BEEE11",
+        primaryColorBackground = "#BEEE111A",
+        gradientColor = "rgba(190, 238, 17, 0.329)"
+    },
+    Links = {
+        discord = "https://discord.gg/ftRzQM7D",
+        tebex = "https://www.tebex.io/"
+    },
+}
+
+CFG.CheckLocales = function()
+    print("[PRISM PAUSEMENU] Current locale: " .. CFG.Locale)
+    print("[PRISM PAUSEMENU] Available locales:")
+    for locale, _ in pairs(Locales) do
+        print("  - " .. locale)
+    end
+    if Locales[CFG.Locale] then
+        print("[PRISM PAUSEMENU] Locale loaded successfully")
+    else
+        print("[PRISM PAUSEMENU] Locale not found, falling back to 'en'")
+    end
+end
+
+
+CFG.isPlayerDead  = function()
+    return IsEntityDead(PlayerPedId()) 
+end
+
+CFG.AutoDetectFramework = function()
+    if CFG.Framework and CFG.Framework ~= "auto" then
+        print("[PRISM PAUSEMENU] Framework manually configured: " .. CFG.Framework)
+        return CFG.Framework
+    end
+    
+    local detectedFramework = "unknown"
+    
+    if GetResourceState('es_extended') == 'started' then
+        detectedFramework = "esx"
+        print("[PRISM PAUSEMENU] Framework auto-detected: ESX")
+    
+    elseif GetResourceState('qbx_core') == 'started' then
+        detectedFramework = "qbox"
+        print("[PRISM PAUSEMENU] Framework auto-detected: QBox")
+
+
+    elseif GetResourceState('qb-core') == 'started' then
+        detectedFramework = "qb"
+        print("[PRISM PAUSEMENU] Framework auto-detected: QB-Core")
+    
+    else
+        print("[PRISM PAUSEMENU] No supported framework detected!")
+        print("[PRISM PAUSEMENU] Supported frameworks: ESX, QB-Core, QBox")
+        print("[PRISM PAUSEMENU] You can manually specify the framework in shared/cfg.lua")
+    end
+    
+    CFG.Framework = detectedFramework
+    
+    return detectedFramework
+end
+
+CFG.DetectedFramework = CFG.AutoDetectFramework()
+
+CFG.CheckLocales()
+
+function DebugPrint(message)
+    if CFG.Debug then
+        print("[PRISM PAUSEMENU DEBUG] " .. tostring(message))
+    end
+end
+
+
+```

@@ -1,0 +1,187 @@
+import Image from 'next/image'
+
+# Progress
+
+## ProgressBar
+
+Displays a running progress bar.
+
+```lua copy
+
+lib.progressBar(data)
+exports['prism_uipack']:ProgressBar(data)
+
+```
+
+- duration: `number`
+- label: `string`
+- variant?: `primary` | `secondary`    
+> Default: `primary`
+- position?: `top-center` | `bottom-center` | `right-center` | `left-center` | `bottom` | `center` | `middle`
+> Default: `bottom-center`
+- useWhileDead?: `boolean`
+- allowRagdoll?: `boolean`
+- allowSwimming?: `boolean`
+- allowCuffed?: `boolean`
+- allowFalling?: `boolean`
+- canCancel?: `boolean`
+- anim?: `table` `(object)`
+> - dict?: `string`
+>> Must specify either scenario or dict
+> - clip: `string`
+> - flag?: `number`
+>> Default: `49`
+> - blendIn?: `float`
+>> Default: `3.0`
+> - blendOut?: `float`
+>> Default: `1.0`
+> - duration?: `number`
+>> Default: `-1`
+> - playbackRate?: `number`
+>> Default: `0`
+> - blendOut?: `float`
+>> Default: `1.0`
+> - duration?: `number`
+>> Default: `-1`
+> - playbackRate?: `number`
+>> Default: `0`
+> - lockX?: `boolean`
+> - lockY?: `boolean`
+> - lockZ?: `boolean`
+> - scenario?: `string`
+>> Must specify either scenario or dict
+> - playEnter?: `boolean`
+>> Default: `true`
+- prop?: `table` | `(object or array)`
+> - [ If you want to define multiple props, you can pass them as individual tables (array of objects) ]
+> - model: `hash`
+> - bone?: `number`
+>> Default: `60309`
+> - pos: `table`
+>> x: `number`
+>> y: `number`
+>> z: `number`
+> - rot: `table` `(object)`
+>> x: `number`
+>> y: `number`
+>> z: `number`
+> - rotOrder?: `number`
+>> [The order in which yaw, pitch and roll is applied.](https://docs.fivem.net/natives/?_0xAFBD61CC738D9EB9)
+>> Default: `0`
+- disable?: `table` `(object)`
+> - move?: `boolean`
+> - car?: `boolean`
+> - combat?: `boolean`
+> - mouse?: `boolean`
+> - sprint?: `boolean`
+
+## ProgressActive
+
+Returns true if a progress bar is currently active.
+
+```lua copy
+
+lib.progressActive()
+exports['prism_uipack']:ProgressActive()
+```
+
+## CancelProgress
+
+If there is a progress bar active and the progress bar can be cancelled then it cancels it.
+
+
+```lua copy
+
+lib.cancelProgress()
+exports['prism_uipack']:CancelProgress()
+```
+
+## Example
+
+### ox_lib
+
+```lua copy
+    -- Primary
+    if lib.progressBar({
+            label = 'Smoking a Cigarette',
+            duration = 5000,
+            position = 'bottom-center',
+            anim = {
+                scenario = 'WORLD_HUMAN_SMOKING'
+            },
+            canCancel = true
+        }) then
+        print('Do stuff when complete')
+    else
+        print('Do stuff when cancelled')
+    end
+
+    -- Secondary
+    if lib.progressBar({
+            label = 'Smoking a Cigarette',
+            duration = 5000,
+            variant = 'secondary',
+            position = 'bottom-center',
+            anim = {
+                scenario = 'WORLD_HUMAN_SMOKING'
+            },
+            canCancel = true
+        }) then
+        print('Do stuff when complete')
+    else
+        print('Do stuff when cancelled')
+    end
+```
+
+### exports
+
+```lua copy
+
+    -- Primary
+    if exports['prism_uipack']:ProgressBar({
+            label = 'Smoking a Cigarette',
+            duration = 5000,
+            position = 'bottom-center',
+            anim = {
+                scenario = 'WORLD_HUMAN_SMOKING'
+            },
+            canCancel = true
+        }) then
+        print('Do stuff when complete')
+    else
+        print('Do stuff when cancelled')
+    end
+
+    -- Secondary
+    if exports['prism_uipack']:ProgressBar({
+            label = 'Smoking a Cigarette',
+            duration = 5000,
+            mode = 'secondary',
+            position = 'bottom-center',
+            anim = {
+                scenario = 'WORLD_HUMAN_SMOKING'
+            },
+            canCancel = true
+        }) then
+        print('Do stuff when complete')
+    else
+        print('Do stuff when cancelled')
+    end
+```
+
+<div className="flex flex-col md:flex-row justify-center gap-6 md:gap-10 mt-10 items-center">
+    <Image 
+        src="/p1.png" 
+        alt="Primary Progress Bar" 
+        width={377} 
+        height={161}
+        className="w-full max-w-[377px] h-auto"
+    />
+    <Image 
+        src="/p2.png" 
+        alt="Secondary Progress Bar" 
+        width={337} 
+        height={125}
+        className="w-full max-w-[337px] h-auto"
+    />
+</div>

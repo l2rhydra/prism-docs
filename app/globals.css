@@ -1,0 +1,7 @@
+@import "tailwindcss";
+
+:root {
+  --nextra-primary-hue: 75 !important;        /* hue for lime green */
+  --nextra-primary-saturation: 100% !important;
+  --nextra-primary-lightness: 60% !important;
+}

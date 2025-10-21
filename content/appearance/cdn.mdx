@@ -1,0 +1,52 @@
+import { Callout } from 'nextra/components'
+import { Steps } from 'nextra/components'
+import Image from 'next/image'
+
+# CDN
+
+<div className='text-lg mt-2'
+    style={{
+        color: 'rgb(185, 198, 162)'
+    }}
+>This page explains how to upload your images to the Five Mange CDN.</div>
+
+<Callout type="info">
+  Why use a CDN? It provides players with a smoother experience on your server by eliminating the need to download all clothing images during login. Instead, the images are pre-downloaded through the CDN, allowing players to load in and create their character without any delays.
+</Callout>
+
+<Callout type="error">
+  Make sure you’ve completed all the steps for generating the images. If not, refer to the page that explains the process.
+</Callout>
+
+<Steps>
+    ### Step 1
+
+    Go to the [FiveManage](https://app.fivemanage.com/) website and create an account. Once your account is set up, create a team.
+
+    ### Step 2
+
+    Open your team, navigate to Storage, and click Upload Assets.
+
+    <Image src='/fminfo.avif' alt='cdnstep2' width={1920} height={384} />
+
+    ### Step 3
+
+    Navigate to the `illenium-appearance\web\dist\clothing` folder, select all the clothing images, and begin uploading them.
+
+    ### Step 4
+
+    Once all clothing images have been successfully uploaded, click on any image and copy its ID.
+
+    <Image src='/fminfo2.avif' alt='cdnstep4' width={1920} height={384} />
+
+    ### Step 5
+
+    Open the `illenium-appearance\shared\config.lua` file, enable the CDN option, and paste the ID.
+
+    
+    <Image src='/fminfo3.avif' alt='cdnstep4' width={1920} height={384} />
+
+    ### Step 6
+
+    Go to `illenium-appearance\web\dist\clothing`, delete all the images in the folder, restart your server, and enjoy.
+</Steps>

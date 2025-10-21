@@ -1,0 +1,92 @@
+import { Callout } from 'nextra/components'
+
+# Config
+
+<div className='text-lg mt-2'
+    style={{
+        color: 'rgb(185, 198, 162)'
+    }}
+>All Prism Scripts contain various editable and unobscured files containing, exports, client<br/> and server functions, configuration methods and more.</div>
+
+<Callout type="info">
+  Ensure all convars are properly set in your server.cfg before starting the resource.
+</Callout>
+
+```lua copy
+setr prism:primaryColor "#BEEE11"
+```
+> Set the primary color of the UI
+
+```lua copy
+setr prism:disabledComponents {
+    "textUI": false,
+    "notify": false,
+    "progressBar": false,
+    "radial": false,
+    "skillCheck": false,
+    "inputDialog": false,
+    "contextMenu": false,
+    "alertDialog": false,
+    "listMenu": false
+}
+```
+> Disable specific UI Components
+>
+> If disabled, we will not overwrite the functions to our own. So for example you will be able to use the ox_lib's version of that specific ui component.
+
+```lua copy
+setr prism:locale "en"
+```
+> Set a custom locale
+>
+> Check the `/locales` folder to check out our current locales, or create your own one.
+>
+>To create support for your own language, you just have to create a file named (e.g) `language.lua` , do the translations (just duplicate the en.lua file and translate) and set your `prism:locale` convar to `language`
+
+```lua copy
+setr prism:debug 1
+```
+> Toggle the debug mode. 1 = enabled, 0 = disabled.
+>
+> If enabled, you will get debug prints in console. (May help with support in the future)
+
+```lua copy
+setr prism:notificationDuration 3000
+```
+
+> Set the default notification duration. If a custom duration has been specified with code, then this gets skippe
+
+```lua copy
+setr prism:progressCancelKey "X"
+```
+> Set the cancel key of the progressbar
+
+```lua copy
+setr prism:notificationPosition "top-center"
+```
+
+> Set the default notification position. If a custom position has been specified with code, then this gets skipped
+
+```lua copy 
+setr prism:textUIPosition "center-left"
+```
+
+> Set the default TextUI position. If a custom position has been specified with code, then this gets skipped
+
+```lua copy
+setr prism:progressBar "primary"
+```
+
+> `primary` or `secondary` Default progressBar variant If a custom variant has been specified with code, then this gets skipped.
+
+```lua copy
+setr prism:radialOpenMode "press"
+```
+
+> `press` or `hold` Default Radial Menu open mode. If hold, the radial menu will stay open until the user releases the open key.
+
+```lua copy
+setr prism:radialOpenKey "z"
+```
+
+> Radial open key. Change to any key you'd like. Note: you have to delete the bind in GTA V Settings if you are changing the key after already joining your server with our resource.

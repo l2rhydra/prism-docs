@@ -1,0 +1,128 @@
+# Config
+
+<div className='text-lg mt-2'
+    style={{
+        color: 'rgb(185, 198, 162)'
+    }}
+>All Prism Scripts contain various editable and unobscured files containing, exports, client<br/> and server functions, configuration methods and more.</div>
+
+```lua filename="config.lua" copy
+
+Config = {}
+
+Config.Debug = false
+
+Config.PrimaryColor = '#FF0000'
+
+Config.CDN = false
+Config.CDNLink = 'https://r2.fivemanage.com/your_id/'
+
+Config.DisableImages = false
+
+Config.RestrictPedScale = false
+
+Config.AllowedPedScale = {
+    'discord:752417728652115980',
+    'license:.....',
+    'steam:110000103fd1bb6',
+}
+
+Config.PedScale = {
+    min = 0.5,
+    max = 1.5,
+    factor = 0.1,
+}
+
+Config.ClothingCost = 100
+Config.BarberCost = 100
+Config.TattooCost = 100
+Config.SurgeonCost = 100
+
+Config.ChargePerTattoo = true -- Charge players per tattoo. Config.TattooCost will become the cost of 1 tattoo. The cost can be overridden by adding `cost` key in shared/tattoos.lua for specific tattoos
+
+-- Only set this to true if you're using rcore_tattoos
+Config.RCoreTattoosCompatibility = false
+
+Config.AsynchronousLoading = false -- Change this to false if you want the NUI data to load before displaying the appearance UI
+
+Config.UseTarget = false
+
+Config.TextUIOptions = {
+    position = "left-center"
+}
+
+Config.NotifyOptions = {
+    position = "top-right"
+}
+
+Config.OutfitCodeLength = 10
+
+Config.UseRadialMenu = false
+Config.UseOxRadial = false -- Set to true to use ox_lib radial menu, both this and UseRadialMenu must be true 
+
+Config.EnablePedsForShops = true
+Config.EnablePedsForClothingRooms = true
+Config.EnablePedsForPlayerOutfitRooms = true
+
+Config.EnablePedMenu = true
+Config.PedMenuGroup = "group.admin"
+
+Config.EnableJobOutfitsCommand = false -- Enables /joboutfits and /gangoutfits commands
+
+Config.ShowNearestShopOnly = false
+Config.HideRadar = false -- Hides the minimap while the appearance menu is open
+Config.NearestShopBlipUpdateDelay = 10000
+
+Config.InvincibleDuringCustomization = true
+
+Config.PreventTrackerRemoval = true -- Disables "Scarf and Chains" section if the player has tracker
+Config.TrackerClothingOptions = {
+    drawable = 13,
+    texture = 0
+}
+
+Config.NewCharacterSections = {
+    Ped = true,
+    HeadBlend = true,
+    FaceFeatures = true,
+    HeadOverlays = true,
+    Components = true,
+    Props = true,
+    Tattoos = true
+}
+
+Config.GenderBasedOnPed = true
+
+Config.AlwaysKeepProps = false
+
+Config.PersistUniforms = false -- Keeps Job / Gang Outfits on player reconnects / logout
+Config.OnDutyOnlyClothingRooms = false -- Set to `true` to make the clothing rooms accessible only to players who are On Duty
+
+Config.BossManagedOutfits = false -- Allows Job / Gang bosses to manage their own job / gang outfits
+
+Config.ReloadSkinCooldown = 5000
+
+Config.AutomaticFade = false -- Enables automatic fading and hides the Fade section from Hair
+
+Config.DisableComponents = {
+    Masks = false,
+    UpperBody = false,
+    LowerBody = false,
+    Bags = false,
+    Shoes = false,
+    ScarfAndChains = false,
+    BodyArmor = false,
+    Shirts = false,
+    Decals = false,
+    Jackets = false
+}
+
+Config.DisableProps = {
+    Hats = false,
+    Glasses = false,
+    Ear = false,
+    Watches = false,
+    Bracelets = false
+}
+
+```

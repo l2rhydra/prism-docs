@@ -1,0 +1,81 @@
+import { Steps } from 'nextra/components'
+import { SolutionBox } from '../../components/solution'
+
+# FiveM Asset Escrow System
+<div className='text-lg mt-2'
+    style={{
+        color: 'rgb(185, 198, 162)'
+    }}
+>Ran into an issue with the **FiveM Asset Escrow system?**</div>
+<div className='text-lg mt-1'
+    style={{
+        color: 'rgb(185, 198, 162)'
+    }}
+>Don’t worry, this guide breaks down the most common problems and shows you how to fix them fast. Follow along to keep your protected scripts secure and your server error-free.</div>
+
+---
+
+# What is FiveM Asset Escrow System ?
+<div className='text-lg mt-3'
+    style={{
+        color: 'rgb(185, 198, 162)'
+    }}
+>The **FiveM Asset Escrow System** is a built-in content protection feature developed by FiveM to safeguard the work of script and asset creators. It encrypts your purchased resources, making them secure and resistant to unauthorized access, tampering, or extraction.</div>
+
+<div className='text-lg mt-3'
+    style={{
+        color: 'rgb(185, 198, 162)'
+    }}
+>This system helps ensure that the scripts and assets remain protected, exclusive, and safe from leaks or misuse</div>
+
+### Key Benefits:
+> - Encrypted resources to prevent reverse engineering or modification
+> - Robust protection against script dumping or exploit attempts
+> - Peace of mind for developers and server owners using premium, paid content
+
+---
+
+# Common Issues & Solutions
+
+### Below are the most common errors encountered when using the FiveM Escrow System, along with their solutions :
+
+<Steps>
+
+### ❌ Failed to verify protected resource ``resource-name``
+
+If you encounter this error, it usually means that files were corrupted during the transfer process. FTP programs, such as FileZilla, might sometimes skip important encrypted files like `.fxap`.
+    <SolutionBox>
+      <ul>
+        -   <li>Ensure that all encrypted files are properly copied, including the ``.fxap`` file</li>
+            <li>If you're using FileZilla, try switching to WinSCP for file transfers to avoid skipped files.</li>
+      </ul>
+    </SolutionBox>
+ 
+### ⚠️ You lack the required entitlement to use ``resource-name``
+
+This error means that your FiveM server license key is not linked to the correct account where the asset was purchased. It could also happen if you haven’t restarted your server after installing the asset.
+
+    <SolutionBox>
+      <ul>
+        - <li>Verify the server license key is linked to the account where the asset was purchased.</li>
+        <li>Restart your server after installing the asset to ensure proper loading.</li>
+      </ul>
+    </SolutionBox>
+
+### ⚙️ Syntax error ``</1>`` or similar
+
+This error can be caused by several issues:
+
+> - You might be using an outdated FiveM artifact version (lower than 4960).
+> - Editing encrypted code is not allowed and may cause this error.
+> - The server may not have been restarted after installation.
+
+    <SolutionBox>
+      <ul>
+        - <li>Ensure you are using artifact version ``4960 or higher``. Download the latest artifacts from [here](https://runtime.fivem.net/artifacts/fivem/).</li>
+        <li>Make sure ``encrypted code has not been edited``.</li>
+        <li>``Restart your server`` after installation to ensure everything works correctly.</li>
+      </ul>
+    </SolutionBox>
+
+</Steps>

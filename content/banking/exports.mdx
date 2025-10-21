@@ -1,0 +1,93 @@
+# Exports and Integrations
+
+## Server Side Exports
+
+## GetSocietyBalance
+It will return the society balance.
+
+```lua copy
+local societyBalance = exports['prism_banking']:GetSocietyBalance(jobName)
+```
+
+## AddSocietyMoney
+
+It will add money to the society.
+
+```lua copy
+exports['prism_banking']:AddSocietyMoney(jobName, amount)
+```
+
+## RemoveSocietyMoney
+
+It will remove money from the society.
+
+```lua copy
+exports['prism_banking']:RemoveSocietyMoney(jobName, amount)
+```
+
+### GetBankAccounts
+
+It will return a table of bank accounts that is associated with the player.
+
+```lua copy
+local bankAccounts = exports['prism_banking']:GetBankAccounts(source)
+```
+
+### GetTransactionHistory
+
+It will return a table of transaction history that is associated with the player.
+
+```lua copy
+local transactionHistory = exports['prism_banking']:GetTransactionHistory(source)
+```
+
+### GetCreditScore
+
+It will return the credit score of the player.
+
+```lua copy
+local creditScore = exports['prism_banking']:GetCreditScore(source)
+```
+
+### GetBankingSettings
+
+It will return the banking settings of the player.
+
+```lua copy
+local bankingSettings = exports['prism_banking']:GetBankingSettings(source)
+```
+
+### GetPlayerWithdrawalLevel
+
+It will return the player's withdrawal level.
+
+```lua copy
+local withdrawalLevel = exports['prism_banking']:GetPlayerWithdrawalLevel(source)
+```
+
+### GetPlayerAccountLevel
+
+It will return the player's account level.
+
+```lua copy
+local accountLevel = exports['prism_banking']:GetPlayerAccountLevel(source)
+```
+
+### AddBankingTransaction
+
+It will add a banking transaction to the player's transaction history.
+
+```lua copy
+exports['prism_banking']:AddBankingTransaction(source, transactionType, amount, spendType, applyTax, transactionName, transactionDescription)
+```
+> transactionType: The type of transaction (e.g., "deposit", "withdrawal", "transfer").
+
+> amount: The amount of money involved in the transaction.
+
+> spendType: The type of spending (e.g., "bank", "cash", "transfer", "interest").
+
+> applyTax: Whether to apply tax to the transaction (true or false).
+
+> transactionName: The name of the transaction (e.g., "ATM Withdrawal").
+
+> transactionDescription: A brief description of the transaction.

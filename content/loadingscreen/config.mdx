@@ -1,0 +1,49 @@
+# Config
+
+<div className='text-lg mt-2'
+    style={{
+        color: 'rgb(185, 198, 162)'
+    }}
+>All Prism Scripts contain various editable and unobscured files containing, exports, client<br/> and server functions, configuration methods and more.</div>
+
+```lua filename="config.lua" copy
+
+Config = {}
+Config.UseOverlayEffect = true -- Use overlay effect on the loading screen.
+Config.DiscordUrl = 'https://discord.gg/PrismScripts' -- Discord URL.
+
+Config.Backgrounds = {
+    {
+        file = 'https://r2.fivemanage.com/6klHhImWr3zm6pM2K9JNT/videoplayback.mp4', -- Supports Youtube,Streamable,DirectMeida, Fivemange Links.
+        musicName = 'Not Like Us',
+        musicAuthor = 'Kendrick Lamar',
+    },
+    {
+        file = 'https://www.youtube.com/watch?v=Hdl-STqtG18&t=2105s',
+        musicName = 'FE!N',
+        musicAuthor = 'Travis Scott',
+    },
+    {
+        file = 'bg.png',
+        musicName = 'FE!N',
+        musicAuthor = 'Travis Scott',
+        audioLink = 'https://r2.fivemanage.com/ilww0vsQbrOTUyk9NfMQN/2.mp3',
+    }
+}
+
+Config.Texts = {
+    header_1 = 'WELCOME,',
+    header_2 = 'Prism Scripts newest season is here! Complete daily and weekly missions to earn points and rewards for every level you complete!'
+}
+
+-- To Change Logo Go To \prism-loadingscreen\web\build\elements\Logo.png 
+Config.ThemeConfig = {
+    primaryColor = '#beee11',
+    DiscordButton = {
+        backgroundColor = '#beee11',
+        textColor = '#121212',
+    }
+}
+
+
+```

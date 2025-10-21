@@ -1,0 +1,48 @@
+import { Steps } from 'nextra/components'
+import { Callout } from 'nextra/components'
+
+# Adding replace/addon clothess
+
+<div className='text-lg mt-2'
+    style={{
+        color: 'rgb(185, 198, 162)'
+    }}
+>If you use addon or replacement clothing, this feature automatically scans all your clothing items.</div>
+
+<Callout type={'warning'}>We recommend performing these steps on an empty server with no players online, and avoiding any activity on your PC during the process.</Callout>
+
+### Dependencies :
+- [screenshot-basic](https://github.com/citizenfx/screenshot-basic)
+- yarn ( comes with fivem by default )
+
+<Steps>
+
+### Step 1
+
+Simply place the resource in your resources folder
+Do not use a subfolder like `resources/[scripts]` as it will cause the script to malfunction.
+
+### Step 2
+
+Open your `server.cfg`, make sure it has `ensure fivem-greenscreener`, then restart your server and load in.
+
+### Step 3
+
+Once all photos have been successfully taken, navigate to `fivem-greenscreener/images/clothing` and copy all the images in that folder. Then go to `illenium-appearance/web/dist/clothing` and paste the images there.
+
+### Step 4
+
+Restart your server and load in!
+
+</Steps>
+
+# Additional Commands
+
+```txt copy
+/customscreenshot [component] [drawable/all] [props/clothing] [male/female/both] [camerasettings(optional)]
+```
+
+### Examples:
+
+- `/customscreenshot 11 17 clothing male {"fov": 55, "rotation": { "x": 0, "y": 0, "z": 15}, "zPos": 0.26}`
+- `/customscreenshot 11 all clothing male {"fov": 55, "rotation": { "x": 0, "y": 0, "z": 15}, "zPos": 0.26}`

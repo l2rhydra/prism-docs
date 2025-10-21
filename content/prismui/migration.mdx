@@ -1,0 +1,21 @@
+import { Callout } from 'nextra/components'
+
+# Ox_Lib Migration
+
+<div className='text-lg mt-2'
+    style={{
+        color: 'rgb(185, 198, 162)'
+    }}
+>Seamlessly migrate from ox_lib UI components to Prism_UI with no code changes required.</div>
+
+
+## Add the compatibility script
+
+Add `@prism_uipack/init.lua` to the shared_scripts list inside your resource’s `fxmanifest.lua`.
+
+```lua copy
+shared_scripts {
+    '@ox_lib/init.lua',
+    '@prism_uipack/init.lua'
+}
+```

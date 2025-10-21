@@ -1,0 +1,106 @@
+import Image from 'next/image'
+
+# Skill Check
+
+## SkillCheck
+
+Runs a skill check with the defined difficulty.
+
+```lua copy
+lib.skillCheck(difficulty, inputs, options)
+exports['prism_uipack']:SkillCheck(difficulty, inputs, options)
+```
+
+- difficulty: `'easy'` or `'medium'` or `'hard'` or `table`
+> - Preset difficulties:
+>> - 'easy' - `{ areaSize: 50, speedMultiplier: 1 }`
+>> - 'medium' - `{ areaSize: 40, speedMultiplier: 1.5 }`
+>> - 'hard' - `{ areaSize: 25, speedMultiplier: 1.75 }`
+
+> - Custom difficulties can be set by sending an object instead of one of the preset strings above
+>> - areaSize: `number`
+>>> Size of the success area in degrees
+>> - speedMultiplier: `number`
+>>> Multiplier for the speed of the indicator
+
+- inputs?: `string[]`
+> - A random key will be picked from the inputs table for each skill check
+> - If no inputs are defined the key is defaulted to `e`
+
+- options?: `table` (`object`)
+> - label?: `string`  
+> - instruction?: `string`
+> - type:  `rect` |  `circle`                          
+
+
+## SkillCheckActive
+Returns true if a skill check is currently active.
+
+```lua copy
+lib.skillCheckActive()
+exports['prism_uipack']:SkillCheckActive()
+```
+
+## CancelSkillCheck
+Returns true if a skill check is currently active.
+
+```lua copy
+lib.cancelSkillCheck()
+exports['prism_uipack']:CancelSkillCheck()
+```
+
+## Example
+
+### ox_lib
+
+```lua copy
+    -- Standard
+    lib.skillCheck({ 'easy', 'medium', 'hard' }, { 'e', 'e', 'e' })
+    
+    -- Custom Options
+    lib.skillCheck({ 'easy', 'medium', 'hard' }, { 'e', 'e', 'e' }, {
+        label = "Custom Label",
+        instruction = "Press E to win!"
+    })
+    
+    -- Other style
+    lib.skillCheck({ 'easy', 'medium', 'hard' }, { 'e', 'e', 'e' }, {
+        type = 'rect'
+    })
+```
+
+### Exports
+
+```lua copy
+
+    -- Standard
+    exports['prism_uipack']:SkillCheck({ 'easy', 'medium', 'hard' }, { 'e', 'e', 'e' })
+    
+    -- Custom Options
+    exports['prism_uipack']:SkillCheck({ 'easy', 'medium', 'hard' }, { 'e', 'e', 'e' }, {
+        label = "Custom Label",
+        instruction = "Press E to win!"
+    })
+    
+    -- Other style
+    exports['prism_uipack']:SkillCheck({ 'easy', 'medium', 'hard' }, { 'e', 'e', 'e' }, {
+        type = 'rect'
+    })
+
+```
+<div className="flex flex-col md:flex-row justify-center gap-6 md:gap-10 mt-10 items-center">
+    <Image 
+        src="/S1.png" 
+        alt="Primary Progress Bar" 
+        width={377} 
+        height={161}
+        className="w-full max-w-[377px] h-auto"
+    />
+    <Image 
+        src="/S2.png" 
+        alt="Secondary Progress Bar" 
+        width={337} 
+        height={125}
+        className="w-full max-w-[337px] h-auto"
+    />
+</div>

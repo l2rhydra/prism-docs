@@ -1,0 +1,45 @@
+# Config
+
+<div className='text-lg mt-2'
+    style={{
+        color: 'rgb(185, 198, 162)'
+    }}
+>Collection of exports, Designed for easy integration with third-party scripts.</div>
+
+## Client Exports
+
+### Show Notification
+Show a notification with type,msg,duration
+
+```txt copy
+prims_Notification_show
+```
+
+`[required array ex:{msg="hello", type="success", time=5000}]`
+
+### Hide specific notification
+Hide a specific notification
+
+```txt copy
+prims_Notification_delete
+```
+
+### Hide all notifications
+Hide all notifications
+
+```txt copy
+prims_Notification_delete_all
+```
+
+### Keybind
+
+```lua copy
+exports.prims_hud:prims_keybind_show({
+  key = "E",
+  title = "Inventory",
+  description = "Press E for open inventory"
+})
+
+--for hide: 
+exports.prims_hud:prims_keybind_hide()
+```
