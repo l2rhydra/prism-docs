@@ -1,0 +1,323 @@
+import { Callout } from 'nextra/components'
+
+# Exports
+
+<div className='text-lg mt-2'
+    style={{
+        color: 'rgb(185, 198, 162)'
+    }}
+>Available exports and functions for the blackmarket system</div>
+
+The blackmarket system provides several exports for interacting with the system programmatically. These can be used from other resources or scripts.
+
+## Admin Commands
+
+The blackmarket system includes several admin commands for managing player progression:
+
+### XP Management
+
+#### Add XP to Player
+```
+/bmaddxp [playerId] [amount]
+```
+Adds the specified amount of XP to a player.
+
+**Example:**
+```
+/bmaddxp 1 500
+```
+
+#### Remove XP from Player
+```
+/bmremovexp [playerId] [amount]
+```
+Removes the specified amount of XP from a player.
+
+**Example:**
+```
+/bmremovexp 1 200
+```
+
+#### Set Player XP
+```
+/bmsetxp [playerId] [amount]
+```
+Sets a player's XP to the exact amount specified.
+
+**Example:**
+```
+/bmsetxp 1 1000
+```
+
+### Level Management
+
+#### Set Player Level
+```
+/bmsetlevel [playerId] [level]
+```
+Sets a player's level to the specified level and adjusts XP accordingly.
+
+**Example:**
+```
+/bmsetlevel 1 10
+```
+
+### Player Management
+
+#### Reset Player Progress
+```
+/bmresetplayer [playerId]
+```
+Completely resets all player progress including XP, level, missions, and rewards.
+
+**Example:**
+```
+/bmresetplayer 1
+```
+
+#### View Player Stats
+```
+/bmstats [playerId]
+```
+Displays detailed statistics about a player's blackmarket progress.
+
+**Example:**
+```
+/bmstats 1
+```
+
+<Callout type="warning">
+  All admin commands require appropriate permissions and are restricted to server administrators.
+</Callout>
+
+## Mission Module Exports
+
+The mission system uses a modular approach with the following internal exports available through the mission module:
+
+### Mission Registration
+
+```lua
+local Missions = require('server.modules.missions')
+```
+
+#### RegisterMission
+```lua
+Missions.RegisterMission(missionData)
+```
+Registers a new mission with the system.
+
+**Parameters:**
+- `missionData` (table): Mission configuration object
+
+**Example:**
+```lua
+local success = Missions.RegisterMission({
+    id = 'custom_mission',
+    name = 'Custom Mission',
+    description = 'A custom mission',
+    type = 'CUSTOM',
+    group = 'custom_group',
+    requirement = 100,
+    duration = 3600,
+    requiredLevel = 1,
+    reward = {
+        xp = 200,
+        type = 'money',
+        amount = 5000
+    }
+})
+```
+
+### Mission Progress
+
+#### UpdateMissionProgress
+```lua
+Missions.UpdateMissionProgress(source, missionId, progress)
+```
+Updates a player's progress for a specific mission.
+
+**Parameters:**
+- `source` (number): Player server ID
+- `missionId` (string): Mission identifier
+- `progress` (number): Progress amount to add
+
+**Returns:**
+- `success` (boolean): Whether the update was successful
+- `wasCompleted` (boolean): Whether the mission was completed with this update
+
+**Example:**
+```lua
+local success, wasCompleted = Missions.UpdateMissionProgress(source, 'walk_1000', 50)
+if wasCompleted then
+    print('Mission completed!')
+end
+```
+
+#### AddMissionProgress
+```lua
+Missions.AddMissionProgress(source, missionId, amount)
+```
+Similar to UpdateMissionProgress but specifically for adding progress.
+
+#### StartMission
+```lua
+Missions.StartMission(source, missionId)
+```
+Starts a mission for a player.
+
+**Parameters:**
+- `source` (number): Player server ID
+- `missionId` (string): Mission identifier
+
+### Mission Information
+
+#### GetMission
+```lua
+Missions.GetMission(missionId)
+```
+Gets mission data for a specific mission.
+
+**Parameters:**
+- `missionId` (string): Mission identifier
+
+**Returns:**
+- `mission` (table): Mission data object or nil if not found
+
+#### GetAllMissions
+```lua
+Missions.GetAllMissions()
+```
+Gets all registered missions.
+
+**Returns:**
+- `missions` (table): Array of all mission objects
+
+#### GetPlayerMissions
+```lua
+Missions.GetPlayerMissions(source)
+```
+Gets all missions for a specific player with their progress.
+
+**Parameters:**
+- `source` (number): Player server ID
+
+**Returns:**
+- `missions` (table): Grouped missions with player progress data
+
+## Events
+
+### Server Events
+
+#### Mission Control Events
+```lua
+-- Start a mission
+TriggerEvent('mission:' .. missionId .. ':start', source)
+
+-- Stop a mission
+TriggerEvent('mission:' .. missionId .. ':stop', source)
+
+-- Complete a mission
+TriggerEvent('mission:' .. missionId .. ':complete', source)
+```
+
+#### Progress Events
+```lua
+-- Add progress to a mission
+TriggerServerEvent('mission:' .. missionId .. ':progress', amount)
+
+-- Custom mission events (example)
+TriggerServerEvent('mission:' .. missionId .. ':customEvent', data)
+```
+
+### Client Events
+
+#### UI Events
+```lua
+-- Open blackmarket UI
+TriggerEvent('blackmarket:open')
+
+-- Close blackmarket UI
+TriggerEvent('blackmarket:close')
+
+-- Toggle blackmarket UI
+TriggerEvent('blackmarket:toggle')
+```
+
+## Framework Integration
+
+The blackmarket system automatically detects and integrates with supported frameworks:
+
+### ESX Integration
+- Uses ESX player data and inventory system
+- Supports ESX notifications and progress bars
+- Integrates with ESX money system
+
+### QBCore Integration
+- Uses QBCore player data and inventory system
+- Supports QBCore notifications and progress bars
+- Integrates with QBCore money system
+
+### Standalone Mode
+- Basic functionality without framework dependencies
+- Custom notification system
+- Basic money handling
+
+<Callout type="info">
+  The system automatically detects your framework and uses the appropriate bridge functions.
+</Callout>
+
+## Database Integration
+
+The blackmarket system uses the following database operations:
+
+### Tables Created
+- `blackmarket_users` - Player progression data
+- `blackmarket_missions` - Mission tracking data  
+- `blackmarket_rewards` - Reward claim history
+
+### Automatic Setup
+Tables are created automatically on first resource start. No manual database setup required.
+
+## Custom Integration Examples
+
+### Adding Custom Rewards
+
+```lua
+-- Server-side reward handling
+RegisterNetEvent('blackmarket:giveCustomReward', function(rewardType, rewardData)
+    local source = source
+    
+    if rewardType == 'custom_item' then
+        -- Your custom item giving logic
+        GivePlayerItem(source, rewardData.name, rewardData.quantity)
+    elseif rewardType == 'custom_money' then
+        -- Your custom money logic
+        GivePlayerMoney(source, rewardData.amount)
+    end
+end)
+```
+
+### Mission Progress Integration
+
+```lua
+-- Example: Integrating with a custom activity
+AddEventHandler('customActivity:completed', function(playerId, activityData)
+    local Missions = require('server.modules.missions')
+    
+    -- Update relevant missions
+    Missions.UpdateMissionProgress(playerId, 'custom_activity_mission', 1)
+end)
+```
+
+### Custom Notifications
+
+```lua
+-- Using the bridge system for custom notifications
+Bridge.Notify(source, 'Custom message', 'success')
+Bridge.Notify(source, 'Error message', 'error')
+Bridge.Notify(source, 'Info message', 'info')
+```
+
+<Callout type="success">
+  The modular design makes it easy to extend the blackmarket system with custom functionality while maintaining compatibility.
+</Callout>

@@ -1,0 +1,375 @@
+import { Callout } from 'nextra/components'
+
+# Custom Missions
+
+<div className='text-lg mt-2'
+    style={{
+        color: 'rgb(185, 198, 162)'
+    }}
+>Create and customize missions for the blackmarket system</div>
+
+## Overview
+
+The blackmarket system features a modular mission system where each mission has its own dedicated files. This makes it easy to add custom tracking logic for specific mission types and maintain clean, organized code.
+
+## How It Works
+
+1. **Mission Config** - Define mission in `shared/config.lua` with ID, name, description, etc.
+2. **Server File** - Create `server/missions/{mission_id}.lua` with tracking logic
+3. **Client File** - (Optional) Create `client/missions/{mission_id}.lua` for client-side detection
+4. **Auto-Load** - Files are automatically loaded via `fxmanifest.lua`
+
+## Creating a New Mission
+
+### Step 1: Add to Config
+
+In `shared/config.lua`, add your mission to the `Config.MissionGroups`:
+
+```lua copy
+Config.MissionGroups = {
+    {
+        title = "My Custom Missions",
+        missions = {
+            {
+                id = 'custom_mission',  -- This is the mission ID
+                title = 'My Custom Mission',
+                description = 'Do something custom',
+                type = Config.MissionTypes.CUSTOM,
+                target = 100,  -- Progress needed
+                duration = 3600,  -- Time limit (seconds)
+                xp = 200,
+                requiredLevel = 5,
+                reward = {
+                    type = 'money',
+                    amount = 10000
+                }
+            }
+        }
+    }
+}
+```
+
+### Step 2: Create Server File
+
+Create `server/missions/custom_mission.lua`:
+
+```lua copy
+-- Mission: custom_mission - Server Side
+-- Description of your mission
+
+local activeMission = {}
+
+RegisterNetEvent('mission:custom_mission:start', function()
+    local source = source
+    print('^2[custom_mission]^7 Starting for player ' .. source)
+    
+    activeMission[source] = {
+        startTime = os.time(),
+        customData = 0
+    }
+    
+    -- Your tracking logic here
+    CreateThread(function()
+        while activeMission[source] do
+            Wait(1000)
+            
+            if not activeMission[source] then break end
+            
+            -- Example: Check something
+            local progress = 1  -- Add progress
+            
+            if progress > 0 then
+                local Missions = require('server.modules.missions')
+                local success, wasCompleted = Missions.UpdateMissionProgress(source, 'custom_mission', progress)
+                
+                if wasCompleted then
+                    activeMission[source] = nil
+                    break
+                end
+            end
+        end
+    end)
+end)
+
+RegisterNetEvent('mission:custom_mission:stop', function()
+    local source = source
+    activeMission[source] = nil
+end)
+
+RegisterNetEvent('mission:custom_mission:complete', function()
+    local source = source
+    activeMission[source] = nil
+end)
+
+print('^2[Missions]^7 Loaded custom_mission mission')
+```
+
+### Step 3: (Optional) Create Client File
+
+If you need client-side detection, create `client/missions/custom_mission.lua`:
+
+```lua copy
+-- Mission: custom_mission - Client Side
+-- Client detection logic
+
+-- Example: Listen for specific events
+AddEventHandler('someGameEvent', function(data)
+    -- Notify server
+    TriggerServerEvent('mission:custom_mission:customEvent', data)
+end)
+
+print('^2[Missions Client]^7 Loaded custom_mission mission client')
+```
+
+### Step 4: Restart Resource
+
+```
+restart prism-blackmarket
+```
+
+<Callout type="success">
+  Your mission will automatically load and work!
+</Callout>
+
+## Mission Types Available
+
+### 1. Distance Tracking (Walk/Drive)
+
+Track distance traveled on foot or in vehicles:
+
+```lua copy
+local activeMission = {}
+
+RegisterNetEvent('mission:my_walk:start', function()
+    local source = source
+    
+    activeMission[source] = {
+        lastPosition = nil,
+        totalDistance = 0
+    }
+    
+    CreateThread(function()
+        while activeMission[source] do
+            Wait(1000)
+            
+            if not activeMission[source] then break end
+            
+            local ped = GetPlayerPed(source)
+            if not ped or ped == 0 then goto continue end
+            
+            local coords = GetEntityCoords(ped)
+            local tracking = activeMission[source]
+            
+            if tracking.lastPosition then
+                local distance = #(coords - tracking.lastPosition)
+                
+                -- Anti-cheat: ignore teleports
+                if distance > 0 and distance < 50 then
+                    local Missions = require('server.modules.missions')
+                    Missions.UpdateMissionProgress(source, 'my_walk', distance)
+                end
+            end
+            
+            tracking.lastPosition = coords
+            
+            ::continue::
+        end
+    end)
+end)
+```
+
+### 2. Event Counter
+
+Count specific events (kills, items collected, etc.):
+
+```lua copy
+local activeMission = {}
+
+RegisterNetEvent('mission:my_counter:start', function()
+    local source = source
+    activeMission[source] = { count = 0 }
+end)
+
+-- Event to increment counter
+RegisterNetEvent('mission:my_counter:increment', function()
+    local source = source
+    
+    if not activeMission[source] then return end
+    
+    activeMission[source].count = activeMission[source].count + 1
+    
+    local Missions = require('server.modules.missions')
+    local success, wasCompleted = Missions.UpdateMissionProgress(source, 'my_counter', 1)
+    
+    if wasCompleted then
+        activeMission[source] = nil
+    end
+end)
+```
+
+### 3. Timer-Based
+
+Track time spent doing a specific activity:
+
+```lua copy
+local activeMission = {}
+
+RegisterNetEvent('mission:my_timer:start', function()
+    local source = source
+    activeMission[source] = { active = true }
+    
+    CreateThread(function()
+        while activeMission[source] do
+            Wait(1000)
+            
+            if not activeMission[source] then break end
+            
+            -- Check if player is still doing the activity
+            local isDoingActivity = CheckSomething(source)
+            
+            if isDoingActivity then
+                local Missions = require('server.modules.missions')
+                Missions.UpdateMissionProgress(source, 'my_timer', 1)  -- 1 second
+            end
+        end
+    end)
+end)
+```
+
+### 4. Location Visits
+
+Check if player visits specific locations:
+
+```lua copy
+local activeMission = {}
+
+RegisterNetEvent('mission:my_visit:start', function()
+    local source = source
+    
+    activeMission[source] = {
+        locations = {
+            vector3(100, 200, 30),
+            vector3(150, 250, 35)
+        },
+        visited = {}
+    }
+    
+    -- Tell client to start checking
+    TriggerClientEvent('mission:my_visit:startCheck', source, activeMission[source].locations)
+end)
+
+-- Client notifies when location reached
+RegisterNetEvent('mission:my_visit:reached', function(locationIndex)
+    local source = source
+    
+    if not activeMission[source] then return end
+    if activeMission[source].visited[locationIndex] then return end
+    
+    activeMission[source].visited[locationIndex] = true
+    
+    local Missions = require('server.modules.missions')
+    Missions.UpdateMissionProgress(source, 'my_visit', 1)
+end)
+```
+
+## Built-in Missions
+
+The system comes with several pre-built missions:
+
+### Walk Missions
+- **walk_1000** - Walk 1000 meters
+- **walk_5000** - Walk 5000 meters
+
+### Drive Missions  
+- **drive_500** - Drive 500 meters
+- **drive_5000** - Drive 5000 meters
+- **drive_10000** - Drive 10000 meters
+
+### Kill Missions
+- **kill_5** - Kill 5 enemies
+- **kill_10** - Kill 10 enemies  
+- **kill_25** - Kill 25 enemies
+
+## Best Practices
+
+### 1. Always Clean Up
+```lua copy
+RegisterNetEvent('mission:my_mission:stop', function()
+    local source = source
+    activeMission[source] = nil  -- This stops threads
+end)
+```
+
+### 2. Use Source Correctly
+```lua copy
+RegisterNetEvent('mission:my_mission:start', function()
+    local source = source  -- Capture source at start of function
+    -- Use 'source' variable, don't call source as function
+end)
+```
+
+### 3. Check Mission Exists
+```lua copy
+if not activeMission[source] then return end
+```
+
+### 4. Break Threads on Completion
+```lua copy
+if wasCompleted then
+    activeMission[source] = nil
+    break  -- Exit thread
+end
+```
+
+### 5. Add Debug Logging
+```lua copy
+print(string.format('[my_mission] Progress: %.2f/%d', progress, target))
+```
+
+## File Naming Convention
+
+<Callout type="warning">
+  **Always match the mission ID exactly!**
+</Callout>
+
+- Mission ID in config: `walk_1000`
+- Server file: `server/missions/walk_1000.lua`
+- Client file: `client/missions/walk_1000.lua`
+- Events: `mission:walk_1000:start`, `mission:walk_1000:stop`, `mission:walk_1000:complete`
+
+## Mission Configuration Options
+
+| Option | Type | Description |
+|--------|------|-------------|
+| `id` | string | Unique mission identifier |
+| `title` | string | Display name |
+| `description` | string | Mission description |
+| `type` | string | Mission type from Config.MissionTypes |
+| `target` | number | Progress needed to complete |
+| `duration` | number | Time limit in seconds |
+| `xp` | number | XP reward on completion |
+| `requiredLevel` | number | Minimum level required |
+| `reward` | table | Reward configuration |
+
+## Reward Types
+
+### Money Reward
+```lua copy
+reward = {
+    type = 'money',
+    amount = 10000
+}
+```
+
+### Item Reward
+```lua copy
+reward = {
+    type = 'item',
+    name = 'weapon_pistol',
+    quantity = 1
+}
+```
+
+<Callout type="info">
+  Need help? Check the existing mission files in `server/missions/` and `client/missions/` for real examples!
+</Callout>

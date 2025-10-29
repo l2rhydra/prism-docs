@@ -1,0 +1,87 @@
+import { Callout } from 'nextra/components'
+
+# Installation
+
+<div className='text-lg mt-2'
+    style={{
+        color: 'rgb(185, 198, 162)'
+    }}
+>Basic installation instructions for prism_blackmarket</div>
+
+## Asset download
+
+<Callout type="info">
+  To find the asset, you must have made the purchase using your own keymaster account. Otherwise, you can use the transfer system to move the asset to a different keymaster account.
+</Callout>
+
+<div className='text-lg mt-5'>
+    Once the purchase is made on our official website, you will receive your asset directly in your [cfx portal](https://portal.cfx.re/) in your own panel you can download the asset and install it following the following documentation.
+</div>
+
+## Dependencies
+
+<Callout type="warning">
+  The blackmarket system requires **ox_lib** to function properly. Make sure it's installed before proceeding.
+</Callout>
+
+### Required Dependencies
+- **ox_lib** - Core library for UI and utility functions
+- **oxmysql** - Database operations (included in most frameworks)
+
+### Framework Support
+- **ESX** - Fully supported
+- **QBCore** - Fully supported
+- **Standalone** - Basic functionality available
+
+## Installation
+
+- **Drag `prism-blackmarket` into your resources directory**
+- **Ensure dependencies are installed and started before the blackmarket**
+- **Edit configuration as desired** (Optional)
+- **Add to server.cfg**:
+
+```cfg copy
+ensure ox_lib
+ensure oxmysql
+ensure prism-blackmarket
+```
+
+- **Restart your server**
+
+## Database Setup
+
+The blackmarket system will automatically create the required database tables on first start:
+
+- `blackmarket_users` - Player progression data
+- `blackmarket_missions` - Mission tracking data
+- `blackmarket_rewards` - Reward claim history
+
+<Callout type="info">
+  No manual database setup is required. Tables are created automatically.
+</Callout>
+
+## Configuration
+
+After installation, you can customize the blackmarket system by editing the configuration file:
+
+```
+prism-blackmarket/shared/config.lua
+```
+
+Key configuration options include:
+- **Open Key** - Keybind to access the blackmarket (default: F7)
+- **Location Restriction** - Restrict access to specific locations
+- **Currency Type** - Use regular money or black money
+- **XP Levels** - Customize the progression system
+- **Market Items** - Configure available items and prices
+
+## Verification
+
+To verify the installation was successful:
+
+1. Start your server
+2. Join as a player
+3. Press **F7** (or your configured key) to open the blackmarket
+4. Check the console for any error messages
+
+If you see the blackmarket interface, the installation was successful!

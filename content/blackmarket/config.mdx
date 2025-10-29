@@ -1,0 +1,324 @@
+import { Callout } from 'nextra/components'
+
+# Configuration
+
+<div className='text-lg mt-2'
+    style={{
+        color: 'rgb(185, 198, 162)'
+    }}
+>Comprehensive configuration guide for prism_blackmarket</div>
+
+The blackmarket system is highly configurable through the `shared/config.lua` file. This allows you to customize every aspect of the system to fit your server's needs.
+
+## Basic Settings
+
+### Keybind Configuration
+
+```lua copy
+Config.OpenKey = 'F7' -- Default key to open the UI
+```
+
+Set the key players use to open the blackmarket interface.
+
+### Location Settings
+
+```lua copy
+Config.RestrictBlackMarketToLocation = false -- Set to true to disable black market in UI when using keybind
+Config.RestrictToLocation = true -- Set to true to restrict access to a specific location
+Config.PedModel = `s_m_y_ammucity_01` -- Ped model for the black market vendor
+Config.BlackMarketLocation = vector4(780.7559, 844.1181, 213.8019, 64.3190)
+```
+
+- **RestrictBlackMarketToLocation**: When `true`, prevents using the keybind to open the UI
+- **RestrictToLocation**: When `true`, requires players to be at the specific location
+- **PedModel**: The ped model for the blackmarket vendor
+- **BlackMarketLocation**: Coordinates where the blackmarket is located
+
+### Currency Settings
+
+```lua copy
+Config.UseBlackMoney = true -- Use black_money instead of cash for all transactions
+Config.BlackMoneyItem = 'black_money' -- Item name for black money in your framework
+```
+
+Configure whether to use regular money or black money for transactions.
+
+## Level System
+
+### XP and Levels
+
+The blackmarket features a comprehensive 30-level progression system:
+
+```lua copy
+Config.Levels = {
+    { level = 1,  name = 'Street Rat',        xpToNext = 100,   description = 'Just starting in the underground' },
+    { level = 2,  name = 'Corner Dealer',     xpToNext = 150,   description = 'Selling on street corners' },
+    { level = 3,  name = 'Block Runner',      xpToNext = 200,   description = 'Running the block' },
+    -- ... more levels
+    { level = 30, name = 'Underworld God',    xpToNext = 25000, description = 'A god among criminals' },
+}
+```
+
+Each level includes:
+- **level**: The level number
+- **name**: Display name for the level
+- **xpToNext**: XP required to reach the NEXT level
+- **description**: Flavor text describing the level
+
+### Fallback XP System
+
+For levels beyond the defined ones:
+
+```lua copy
+Config.XPPerLevel = 500 -- Base XP needed per level
+Config.XPMultiplier = 1.5 -- Multiplier for each level
+```
+
+### UI Customization
+
+```lua copy
+Config.PrimaryColor = '#FF0000' -- Default primary color for the UI
+```
+
+Set the primary color theme for the blackmarket interface.
+
+## Reward System
+
+### Daily Rewards
+
+```lua copy
+Config.DailyRewardCooldown = 86400 -- 24 hours
+
+Config.DailyReward = {
+    type = 'money',  -- 'money' or 'item'
+    amount = 1000,   -- Amount if type is money
+    -- name = 'lockpick',  -- Item name if type is item
+    -- quantity = 1,       -- Item quantity if type is item
+    label = 'Daily Cash Reward',
+    description = '$1,000 daily bonus'
+}
+```
+
+### Weekly Rewards
+
+```lua copy
+Config.WeeklyRewardCooldown = 604800 -- 7 days
+
+Config.WeeklyReward = {
+    type = 'money',  -- 'money' or 'item'
+    amount = 5000,   -- Amount if type is money
+    -- name = 'weapon_pistol',  -- Item name if type is item
+    -- quantity = 1,            -- Item quantity if type is item
+    label = 'Weekly Cash Reward',
+    description = '$5,000 weekly bonus'
+}
+```
+
+<Callout type="info">
+  You can configure rewards to give either money or items. Comment/uncomment the appropriate lines.
+</Callout>
+
+## Market Categories
+
+### Category Structure
+
+```lua copy
+Config.MarketCategories = {
+    {
+        id = 'weapons',
+        name = 'Weapons',
+        items = {
+            -- Items go here
+        }
+    },
+    {
+        id = 'vehicles', 
+        name = 'Vehicles',
+        items = {
+            -- Items go here
+        }
+    },
+    {
+        id = 'items',
+        name = 'Items', 
+        items = {
+            -- Items go here
+        }
+    }
+}
+```
+
+### Item Configuration
+
+Each item in a category follows this structure:
+
+```lua copy
+{
+    type = 'item',              -- 'item', 'weapon', or 'vehicle'
+    name = 'weapon_pistol',     -- Item/weapon/vehicle spawn name
+    label = 'Pistol',           -- Display name
+    price = 1500,               -- Price in configured currency
+    rarity = 'common',          -- 'common', 'rare', 'epic', 'legendary'
+    description = 'A reliable sidearm for personal defense.',
+    image = 'weapon_pistol',    -- Image filename (without extension)
+    requiredLevel = 1           -- Minimum level required to purchase
+}
+```
+
+#### Item Types
+
+- **item**: Regular inventory items (tools, consumables, etc.)
+- **weapon**: Weapons that get added to player's weapon inventory
+- **vehicle**: Vehicles that get spawned for the player
+
+#### Rarity Levels
+
+- **common**: Basic items, usually cheaper
+- **rare**: Uncommon items with better stats/value
+- **epic**: High-tier items, expensive
+- **legendary**: Top-tier items, very expensive
+
+### Example Items
+
+#### Weapons
+```lua copy
+{
+    type = 'weapon',
+    name = 'weapon_assaultrifle',
+    label = 'Assault Rifle',
+    price = 5000,
+    rarity = 'rare',
+    description = 'A powerful assault rifle suitable for various combat situations.',
+    image = 'weapon_assaultrifle',
+    requiredLevel = 5
+}
+```
+
+#### Vehicles
+```lua copy
+{
+    type = 'vehicle',
+    name = 'adder',
+    label = 'Adder',
+    price = 150000,
+    rarity = 'epic', 
+    description = 'A supercar with incredible speed and handling.',
+    image = 'adder',
+    requiredLevel = 15
+}
+```
+
+#### Items
+```lua copy
+{
+    type = 'item',
+    name = 'lockpick',
+    label = 'Lockpick',
+    price = 250,
+    rarity = 'common',
+    description = 'A tool for picking locks and gaining access to secured areas.',
+    image = 'lockpick',
+    requiredLevel = 1
+}
+```
+
+## Mission System
+
+### Mission Types
+
+```lua copy
+Config.MissionTypes = {
+    WALK = 'WALK',           -- Track distance walked
+    DRIVE = 'DRIVE',         -- Track distance driven
+    KILL = 'KILL',           -- Track kills
+    COLLECT = 'COLLECT',     -- Collect items
+    VISIT = 'VISIT',         -- Visit locations
+    CUSTOM = 'CUSTOM'        -- Custom mission type
+}
+```
+
+### Mission Groups
+
+```lua copy
+Config.MissionGroups = {
+    {
+        title = "Street Activities",
+        missions = {
+            {
+                id = 'walk_1000',
+                title = 'City Walker',
+                description = 'Walk 1000 meters through the city',
+                type = Config.MissionTypes.WALK,
+                target = 1000,
+                duration = 3600, -- 1 hour
+                xp = 50,
+                requiredLevel = 1,
+                reward = {
+                    type = 'money',
+                    amount = 2000
+                }
+            }
+        }
+    }
+}
+```
+
+#### Mission Properties
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `id` | string | Unique mission identifier (must match file names) |
+| `title` | string | Display name for the mission |
+| `description` | string | Mission description shown to players |
+| `type` | string | Mission type from Config.MissionTypes |
+| `target` | number | Amount of progress needed to complete |
+| `duration` | number | Time limit in seconds |
+| `xp` | number | XP reward on completion |
+| `requiredLevel` | number | Minimum level required to start |
+| `reward` | table | Reward configuration |
+
+#### Reward Configuration
+
+Money reward:
+```lua copy
+reward = {
+    type = 'money',
+    amount = 10000
+}
+```
+
+Item reward:
+```lua copy
+reward = {
+    type = 'item',
+    name = 'weapon_pistol',
+    quantity = 1
+}
+```
+
+## Best Practices
+
+<Callout type="warning">
+  **Important**: When adding new missions, make sure to create the corresponding mission files in `server/missions/` and optionally `client/missions/`.
+</Callout>
+
+### Balancing
+
+1. **Level Requirements**: Start low and gradually increase for higher-tier items
+2. **Pricing**: Balance prices based on your server's economy
+3. **XP Rewards**: Higher difficulty missions should give more XP
+4. **Mission Duration**: Consider reasonable time limits for different activities
+
+### Performance
+
+1. **Mission Threads**: Keep tracking intervals reasonable (1000ms minimum recommended)
+2. **Anti-cheat**: Always validate progress increases to prevent exploitation
+3. **Resource Usage**: Don't track too many things simultaneously
+
+### Images
+
+Place item images in `web/public/` directory with the same name as the `image` property in your config (e.g., `weapon_pistol.png`).
+
+<Callout type="info">
+  The system supports PNG, JPG, and WebP image formats for item display.
+</Callout>
