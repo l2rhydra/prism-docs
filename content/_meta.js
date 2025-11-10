@@ -89,5 +89,14 @@ export default {
       copyPage: false,
       collapsed: true
     },
+  },
+  battlepass : {
+    title: '🎮 Prism Battle Pass',
+    theme: {
+      breadcrumb: false,
+      pagination: true,
+      copyPage: false,
+      collapsed: true
+    },
   }
 }

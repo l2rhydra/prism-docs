@@ -1,0 +1,68 @@
+# Exports and Integrations
+
+## Server Side Exports
+
+## AddXP
+It will add XP to the player.
+
+```lua copy
+---@param playerId number The player id.
+---@param xp number The amount of XP to add.
+---@param reason string The reason for adding XP.
+---@return boolean success Whether the XP was added successfully.
+
+local result = exports['prism_battlepass']:AddXP(playerId, xp, reason)
+```
+
+## UpdateQuestProgress
+It will update the quest progress of the player.
+
+```lua copy
+---@param playerId number The player id.
+---@param questId string The quest id.
+---@param amount number The progress of the quest.
+---@return boolean success Whether the quest progress was updated successfully.
+
+local result = exports['prism_battlepass']:UpdateQuestProgress(playerId, questId, amount)
+```
+
+## GetPlayerLevel
+It will get the level of the player.
+
+```lua copy
+---@param playerId number The player id.
+---@return number level The level of the player.
+
+local level = exports['prism_battlepass']:GetPlayerLevel(playerId)
+```
+
+## GetPlayerXP
+It will get the XP of the player.
+
+```lua copy
+---@param playerId number The player id.
+---@return number xp The XP of the player.
+
+local xp = exports['prism_battlepass']:GetPlayerXP(playerId)
+```
+
+## SetPlayerPremium
+It will set the premium status of the player.
+
+```lua copy
+---@param playerId number The player id.
+---@param isPremium boolean Whether the player is premium.
+---@return boolean success Whether the premium status was set successfully.
+
+local result = exports['prism_battlepass']:SetPlayerPremium(playerId, isPremium)
+```
+
+## GetPlayerPremium
+It will get the premium status of the player.
+
+```lua copy
+---@param playerId number The player id.
+---@return boolean isPremium Whether the player is premium.
+
+local isPremium = exports['prism_battlepass']:GetPlayerPremium(playerId)
+```

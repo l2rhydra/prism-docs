@@ -1,0 +1,116 @@
+# Config
+
+<div className='text-lg mt-2'
+    style={{
+        color: 'rgb(185, 198, 162)'
+    }}
+>All Prism Scripts contain various editable and unobscured files containing, exports, client<br/> and server functions, configuration methods and more.</div>
+
+```lua filename="config.lua" copy
+Config = {}
+
+Config.Framework = 'qbx' -- qbx or esx or qb
+Config.ImagePath = 'nui://ox_inventory/web/images/' -- standalone or nui://ox_inventory/web/images/
+
+Config.Commands = {
+    addXp = 'addxp',
+    setPremium = 'setpremium',
+}
+
+-- Theme Settings
+Config.Theme = {
+    primaryColor = '#BEEE11',
+    primaryShade = '#83A700',
+    secondaryColor = '#F22933',
+    textGradient = 'linear-gradient(180deg, #E1FF77 0%, #BEEE11 50%, #789805 100%)',
+    buttonGradient = 'linear-gradient(90deg, #BEEE11 0%, #95BB0D 50%, #6B880A 100%)'
+}
+
+-- Quest Reset Times (24-hour format)
+Config.DailyResetHour = 0 -- Reset at midnight (0-23)
+Config.WeeklyResetDay = 1 -- Monday (1 = Monday, 7 = Sunday)
+
+Config.EXP_PRICE = 100 -- Price per EXP point
+
+Config.Quests = {
+    {
+        id = 'mission_1', -- id must be unique
+        QuestName = 'Be online for 30 mins', -- name of the quest
+        QuestDesc = 'You must be online for 30 mins to complete this quest', -- description of the quest
+        totalObjectives = 30, -- 30 for 30 mins
+        Reward = 200, -- EXP,
+        questType = 'daily', -- daily or weekly
+        BuiltinQuest = 'playtime' -- builtin quest type, playtime or killcount or swimdistance or rundistance ( these are builtin quests, playtime will count playtime in mins, killcount will count killcount, swimdistance will count swim distance in km, rundistance will count run distance in km )
+    },
+    {
+        id = 'mission_2', -- id must be unique
+        QuestName = 'Kill 10 players', -- name of the quest
+        QuestDesc = 'You must kill 10 players to complete this quest', -- description of the quest
+        totalObjectives = 10, -- 1000 for 1000 kills
+        Reward = 500, -- EXP,
+        questType = 'daily', -- daily or weekly ( daily means the quest will reset every day, weekly means the quest will reset every week )
+        BuiltinQuest = 'killcount' -- builtin quest type, playtime or killcount or swimdistance or rundistance ( these are builtin quests, playtime will count playtime in mins, killcount will count killcount, swimdistance will count swim distance in km, rundistance will count run distance in km )
+    },
+    {
+        id = 'mission_3', -- id must be unique
+        QuestName = 'Swim 10 km', -- name of the quest
+        QuestDesc = 'You must swim 10 km to complete this quest', -- description of the quest
+        totalObjectives = 10, -- 2 km for 2 km swim
+        Reward = 100, -- EXP,
+        questType = 'daily', -- daily or weekly ( daily means the quest will reset every day, weekly means the quest will reset every week )
+        BuiltinQuest = 'swimdistance' -- builtin quest type, playtime or killcount or swimdistance or rundistance ( these are builtin quests, playtime will count playtime in mins, killcount will count killcount, swimdistance will count swim distance in km, rundistance will count run distance in km )
+    },
+    {
+        id = 'mission_4', -- id must be unique
+        QuestName = 'Run 10 km', -- name of the quest
+        QuestDesc = 'You must run 10 km to complete this quest', -- description of the quest
+        totalObjectives = 10, -- 2 km for 2 km run
+        Reward = 100, -- EXP,
+        questType = 'daily', -- daily or weekly ( daily means the quest will reset every day, weekly means the quest will reset every week )
+        BuiltinQuest = 'rundistance' -- builtin quest type, playtime or killcount or swimdistance or rundistance ( these are builtin quests, playtime will count playtime in mins, killcount will count killcount, swimdistance will count swim distance in km, rundistance will count run distance in km )
+    },
+
+}
+
+-- Reward Configuration (Standard Tier)
+Config.StandardRewards = {
+    [1] = { item = 'money', amount = 50, label = 'Dollar', itemType = 'rare' },
+    [2] = { item = 'water', amount = 5, label = 'Water', itemType = 'uncommon' },
+    [3] = { item = 'money', amount = 100, label = 'Dollar', itemType = 'normal' },
+    [4] = { item = 'money', amount = 200, label = 'Dollar', itemType = 'uncommon' },
+    [5] = { item = 'money', amount = 300, label = 'Dollar', itemType = 'normal' },
+    [6] = { item = 'money', amount = 400, label = 'Dollar', itemType = 'uncommon' },
+    [7] = { item = 'money', amount = 500, label = 'Dollar', itemType = 'rare' },
+    [8] = { item = 'money', amount = 600, label = 'Dollar', itemType = 'rare' },
+    [9] = { item = 'money', amount = 700, label = 'Dollar', itemType = 'rare' },
+    [10] = { item = 'money', amount = 1000, label = 'Dollar', itemType = 'epic' },
+}
+
+-- Reward Configuration (Premium/Advanced Tier)
+Config.AdvancedRewards = {
+    [1] = { item = 'money', amount = 100, label = 'Dollar', itemType = 'rare' },
+    [2] = { item = 'water', amount = 10, label = 'Water', itemType = 'epic' },
+    [3] = { item = 'money', amount = 200, label = 'Dollar', itemType = 'uncommon' },
+    [4] = { item = 'money', amount = 400, label = 'Dollar', itemType = 'uncommon' },
+    [5] = { item = 'money', amount = 600, label = 'Dollar', itemType = 'rare' },
+    [6] = { item = 'money', amount = 800, label = 'Dollar', itemType = 'rare' },
+    [7] = { item = 'money', amount = 1000, label = 'Dollar', itemType = 'epic' },
+    [8] = { item = 'money', amount = 1200, label = 'Dollar', itemType = 'epic' },
+    [9] = { item = 'money', amount = 1500, label = 'Dollar', itemType = 'epic' },
+    [10] = { item = 'burger', amount = 10, label = 'Burger', itemType = 'epic' },
+}
+
+-- XP Requirements Per Level (Total XP needed to reach each level)
+Config.LevelXP = {
+    [1] = 0,        -- Starting level (no XP needed)
+    [2] = 1000,     -- Need 1000 total XP to reach level 2
+    [3] = 2500,     -- Need 2500 total XP to reach level 3
+    [4] = 4500,     -- Need 4500 total XP to reach level 4
+    [5] = 7000,     -- Need 7000 total XP to reach level 5
+    [6] = 10000,    -- Need 10000 total XP to reach level 6
+    [7] = 13500,    -- Need 13500 total XP to reach level 7
+    [8] = 17500,    -- Need 17500 total XP to reach level 8
+    [9] = 22000,    -- Need 22000 total XP to reach level 9
+    [10] = 27000   -- Need 27000 total XP to reach level 10
+}
+```
