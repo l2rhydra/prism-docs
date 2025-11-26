@@ -1,0 +1,38 @@
+import { Callout } from 'nextra/components'
+
+# Configuration
+<div className='text-lg mt-2'
+    style={{
+        color: 'rgb(185, 198, 162)'
+    }}
+>Configuration options for prism-emotemenu</div>
+
+## Config File
+
+The configuration file is located at `shared/config.lua` and allows you to customize various aspects of the emote menu.
+
+<Callout type="info">
+  After making changes to the configuration, restart the resource using `ensure prism-emotemenu` for changes to take effect.
+</Callout>
+
+## Features
+
+### Drag and Drop Interface
+The emote menu features an intuitive drag-and-drop interface that allows players to:
+- Organize their favorite emotes
+- Quick access to frequently used animations
+- Customize the layout to their preference
+
+### Custom Animation Recording
+Built-in support for recording custom animations:
+- Use `/recordemotes` command to start recording
+- Automatic saving to `ts-recorder/recordings/processed`
+- Easy integration with `prism-emoteassets/animations`
+
+## Additional Configuration
+
+For detailed configuration options, please refer to the `shared/config.lua` file in your resource folder. Common customization options typically include:
+- Keybind settings
+- UI positioning and styling
+- Animation categories
+- Quick access slots

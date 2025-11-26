@@ -107,5 +107,14 @@ export default {
       copyPage: false,
       collapsed: true
     },
-  }
+  },
+  emotemenu: {
+    title: '💃 Prism Emote Menu',
+    theme: {
+      breadcrumb: false,
+      pagination: true,
+      copyPage: false,
+      collapsed: true
+    },
+  },
 }
