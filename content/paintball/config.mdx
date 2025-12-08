@@ -1,0 +1,210 @@
+# Config
+
+<div className='text-lg mt-2'
+    style={{
+        color: 'rgb(185, 198, 162)'
+    }}
+>All Prism Scripts contain various editable and unobscured files containing, exports, client<br/> and server functions, configuration methods and more.</div>
+
+```lua filename="config.lua" copy
+Config = {}
+-- Language setting for the paintball system (supported: "en" for English, "tr" for Turkish)
+Config.Language = "en"
+
+-- NPC Ped configuration for the paintball lobby entrance
+Config.Ped = {
+    location = vector4(-271.54, -2032.61, 30.15, 257), -- Coordinates where the NPC will spawn (x, y, z, heading)
+    model = "u_m_y_rsranger_01", -- NPC model/skin to use
+    blipId = 419, -- Blip icon ID shown on the map
+    blipName = "Prism Paintball", -- Name displayed on the map blip
+    interactionDistance = 2.0 -- Maximum distance (in meters) from which players can interact with the NPC
+}
+
+-- Location where players will be teleported back after leaving a paintball match
+Config.ReturnLocation = vector3(-268.32, -2033.57, 30.15)
+
+
+-- Avatar provider settings for player profile pictures in the UI
+Config.AvatarProvider = { type = '', apiKey = "", defaultUrl = "https://i.hizliresim.com/ebxqgcd.gif" } -- type: 'none' = use default avatar, 'discord' = fetch from Discord, 'steam' = fetch from Steam, apiKey: required if using a service on add server.cfg, defaultUrl: fallback image
+
+
+-- Framework detection and configuration
+Config.Framework = {
+    auto = true -- Automatically detect framework (QBCore, QBox, ESX)
+}
+
+-- UI interaction method settings
+Config.UIOpen = {
+    drawtext = false, -- Use draw text interaction (3D text prompt)
+    target = true -- Use target system (ox_target, qb-target, etc.)
+}
+
+-- Enable Ox Inventory compatibility
+Config.OxInvetory = true -- Set to true if using ox_inventory, false for default inventory
+
+-- Available weapons in paintball matches
+Config.Weapons = {
+    [1] = { model = "weapon_paintball", name = "Paintball Gun", ammo = 250, infinite = false, image = "https://docs.fivem.net/weapons/WEAPON_PISTOL.png" }, -- Custom paintball gun
+    [2] = { model = "weapon_pistol", name = "Standard Pistol", ammo = 250, infinite = false, image = "https://docs.fivem.net/weapons/WEAPON_PISTOL.png" }, -- Standard pistol
+    [3] = { model = "weapon_heavypistol", name = "Heavy Pistol", ammo = 250, infinite = false, image = "https://docs.fivem.net/weapons/WEAPON_HEAVYPISTOL.png" }, -- Heavy pistol
+    [4] = { model = "weapon_navyrevolver", name = "Navy Revolver", ammo = 250, infinite = false, image = "https://docs.fivem.net/weapons/WEAPON_NAVYREVOLVER.png" }, -- Navy revolver
+    [5] = { model = "weapon_heavyshotgun", name = "Heavy Shotgun", ammo = 250, infinite = false, image = "https://docs.fivem.net/weapons/WEAPON_HEAVYSHOTGUN.png" }, -- Heavy shotgun
+    [6] = { model = "weapon_dagger", name = "Gold Knife", ammo = 250, infinite = false, image = "https://docs.fivem.net/weapons/WEAPON_DAGGER.png" } -- Gold knife (melee weapon)
+
+}
+-- Cooldown time (in seconds) before a player can join another match after leaving/finishing one
+Config.Cooldown = 5
+-- Delay (in milliseconds) before respawning a player after they are eliminated
+Config.ReviveDelayMs = 4000
+
+-- Player revival/respawn event configuration for different frameworks
+Config.Revive = {
+    qbcoreEvent = "hospital:client:Revive", -- Event name for QBCore framework
+    qboxEvent = "hospital:client:Revive", -- Event name for QBox framework
+    esxEvent = "esx_ambulancejob:revive", -- Event name for ESX framework
+    customEvent = "", -- Custom event name if using a different framework or custom revive system
+    enableSecondTrigger = true, -- Enable a second trigger event for additional compatibility
+    secondTriggerDelayMs = 2000, -- Delay (in milliseconds) before triggering the second event
+    triggerCount = 2 -- Number of times to trigger the revive event
+}
+
+-- Player name display settings
+Config.Name = {
+    useSteamName = true, -- Use player's Steam name
+    useFrameworkName = false -- Use player name from framework (character name) instead of Steam name
+}
+
+-- Lobby management settings
+Config.Lobby = {
+    autoRefreshMs = 5000, -- Interval (in milliseconds) to automatically refresh the lobby list in the UI
+    autoDeleteEmpty = true, -- Automatically delete empty lobbies with no players
+    emptyCheckIntervalMs = 1000, -- Interval (in milliseconds) to check for and delete empty lobbies
+    finishedDeleteMinutes = 1,
+    inactiveDeleteMinutes = 1,
+    cleanupCheckIntervalMs = 3000
+}
+
+-- Sound and music settings
+Config.Sound = {
+    UI = true, -- Enable UI sound effects (button clicks, notifications, etc.)
+    Game = true, -- Enable in-game sound effects (weapons, footsteps, etc.)
+    Cinematic = { enabled = true, volume = 0.2 } -- Background music settings: enabled = play music, volume = music volume level (0.0 to 1.0)
+}
+
+-- Keybind configuration for in-game actions
+Config.Keys = {
+    Scoreboard = 137, -- Key to open the scoreboard (default: 137 = CAPSLOCK)
+    CancelMatch = 194, -- Key to leave/cancel current match (default: 194 = BACKSPACE)
+    CTFPickup = 38 -- Key to pick up/capture the flag in CTF mode (default: 38 = E)
+}
+
+Config.UI = {
+    accentLight = "#BEEE11",
+    accentDark = "#6C870A",
+    leaderboard = { light = "#BEEE11", dark = "#BEEE11" },
+    activeLobbies = { light = "#BEEE11", dark = "#6C870A" },
+    selectTeam = { light = "#BEEE11", dark = "#6C870A" },
+    winLose = { win = "#BEEE11", lose = "#BEEE11" }
+}
+
+-- Capture the Flag game mode settings
+Config.CaptureFlag = {
+    areaScale = 30.0 -- Size of the flag capture area radius (in meters)
+}
+
+-- Available paintball maps with spawn locations for red and blue teams
+Config.Maps = {
+    {
+        MapName = "Pool War", -- Display name of the map
+        map_img = "map1.png", -- Image file for map preview in UI
+        reward = 1000, -- Money reward for winning team
+        center = vector4(-3929.76, -622.14, 636.73, 357), -- Center coordinates of the map
+        flagdeliveryred = vector3(-3911.97, -621.46, 636.82), -- Flag delivery location for red team (CTF mode)
+        flagdeliveryblue = vector3(-3944.78, -618.84, 636.82), -- Flag delivery location for blue team (CTF mode)
+        red = { -- Spawn points for red team players
+            [1] = vector4(-3911.72, -625.44, 636.82, 86),
+            [2] = vector4(-3911.70, -623.19, 636.82, 89),
+            [3] = vector4(-3911.87, -619.52, 636.82, 90),
+            [4] = vector4(-3911.87, -617.66, 636.82, 90),
+            [5] = vector4(-3911.70, -614.65, 636.82, 90),
+          
+        },
+        blue = { -- Spawn points for blue team players
+            [1] = vector4(-3945.40, -624.99, 636.82, 276),
+            [2] = vector4(-3945.36, -621.80, 636.82, 266),
+            [3] = vector4(-3945.50, -618.50, 636.82, 282),
+            [4] = vector4(-3945.39, -616.10, 636.82, 269),
+            [5] = vector4(-3945.60, -613.60, 636.82, 277),
+            
+        }
+    },
+    {
+        MapName = "Construction War",
+        map_img = "map2.png",
+        reward = 1000,
+        center = vector4(-3937.10, -1053.45, 639.96, 271),
+        flagdeliveryred = vector3(-3921.92, -1069.13, 630.88),
+        flagdeliveryblue = vector3(-3950.17, -1040.70, 630.88),
+        red = {
+            [1] = vector4(-3924.28, -1067.95, 630.88, 55),
+            [2] = vector4(-3926.17, -1068.86, 630.88, 73),
+            [3] = vector4(-3925.18, -1066.86, 630.88, 29),
+            [4] = vector4(-3924.15, -1065.30, 630.88, 31),
+            [5] = vector4(-3923.57, -1062.92, 630.88, 38),
+        },
+        blue = {
+            [1] = vector4(-3949.03, -1040.40, 630.88, 231),
+            [2] = vector4(-3947.42, -1040.00, 630.88, 245),
+            [3] = vector4(-3947.74, -1042.71, 630.88, 217),
+            [4] = vector4(-3945.01, -1039.95, 630.88, 247),
+            [5] = vector4(-3948.21, -1043.62, 630.88, 230),
+        }
+    },
+    {
+        MapName = "Big Park War",
+        map_img = "map3.png",
+        reward = 1000,
+        center = vector4(-3911.38, -1354.82, 654.48, 89),
+        flagdeliveryred = vector3(-3961.06, -1311.97, 655.32),
+        flagdeliveryblue = vector3(-3873.45, -1411.92, 652.18),
+        red = {
+            [1] = vector4(-3965.34, -1305.52, 657.52, 274),
+            [2] = vector4(-3967.70, -1307.57, 657.20, 223),
+            [3] = vector4(-3969.37, -1310.02, 656.63, 206),
+            [4] = vector4(-3961.93, -1310.54, 655.32, 195),
+            [5] = vector4(-3958.97, -1309.50, 655.32, 211),
+        },
+        blue = {
+            [1] = vector4(-3871.00, -1418.12, 653.75, 54),
+            [2] = vector4(-3869.88, -1417.04, 653.77, 35),
+            [3] = vector4(-3867.98, -1415.53, 653.82, 37),
+            [4] = vector4(-3867.16, -1414.14, 653.84, 31),
+            [5] = vector4(-3866.56, -1416.86, 653.85, 52),
+        }
+    },
+    {
+        MapName = "Container Map",
+        map_img = "map4.png",
+        reward = 1000,
+        center = vector4(-3902.67, -1750.39, 663.57, 124),
+        flagdeliveryred = vector3(-3886.69, -1750.10, 657.12),
+        flagdeliveryblue = vector3(-3920.03, -1749.52, 657.12),
+        red = {
+            [1] = vector4(-3885.73, -1752.87, 657.19, 86),
+            [2] = vector4(-3885.59, -1751.08, 657.12, 83),
+            [3] = vector4(-3885.35, -1749.21, 657.12, 83),
+            [4] = vector4(-3885.11, -1746.85, 657.12, 81),
+            [5] = vector4(-3885.00, -1745.93, 657.12, 83),
+        },
+        blue = {
+            [1] = vector4(-3920.43, -1745.69, 657.12, 262),
+            [2] = vector4(-3920.72, -1747.50, 657.12, 264),
+            [3] = vector4(-3920.67, -1749.38, 657.12, 258),
+            [4] = vector4(-3920.83, -1751.56, 657.12, 247),
+            [5] = vector4(-3921.52, -1753.51, 657.12, 247),
+        }
+    },
+   
+}
+
+```

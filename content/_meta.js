@@ -117,4 +117,13 @@ export default {
       collapsed: true
     },
   },
+  paintball: {
+    title: '🎾 Prism Paintball',
+    theme: {
+      breadcrumb: false,
+      pagination: true,
+      copyPage: false,
+      collapsed: true
+    },
+  },
 }
