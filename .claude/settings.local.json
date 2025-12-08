@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm update:*)",
+      "Bash(npm view:*)",
+      "Bash(powershell -Command \"$input | ConvertFrom-Json | Where-Object { $_-match ''^15\\.'' } | Select-Object -Last 10\")",
+      "Bash(npm install:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

@@ -126,4 +126,13 @@ export default {
       collapsed: true
     },
   },
+  fishing: {
+    title: '🎣 Prism Fishing',
+    theme: {
+      breadcrumb: false,
+      pagination: true,
+      copyPage: false,
+      collapsed: true
+    },
+  },
 }
