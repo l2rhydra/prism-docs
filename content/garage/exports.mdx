@@ -1,0 +1,114 @@
+# Exports and Integrations
+
+<div className='text-lg mt-2'
+    style={{
+        color: 'rgb(185, 198, 162)'
+    }}
+>All Prism Scripts contain various export functions that can be used to interact with the script.</div>
+
+
+## Server Side Exports
+
+## IsVehicleImpounded
+
+```lua copy
+---@param plate string The plate of the vehicle.
+---@return boolean impounded Whether the vehicle is impounded.
+---@return json impoundData The impound data of the vehicle.
+
+local impounded, impoundData = exports['prism-advancedgarage']:IsVehicleImpounded(plate)
+```
+
+## IsVehicleInGarage
+
+```lua copy
+---@param plate string The plate of the vehicle.
+---@return boolean inGarage Whether the vehicle is in the garage.
+---@return string garageId The id of the garage the vehicle is in.
+
+local inGarage, garageId = exports['prism-advancedgarage']:IsVehicleInGarage(plate)
+```
+
+## IsVehicleParkedInSpot
+```lua copy
+---@param plate string The plate of the vehicle.
+---@return boolean parkedInSpot Whether the vehicle is parked in a spot.
+---@return json spotData The spot data of the vehicle.
+
+local parkedInSpot, spotData = exports['prism-advancedgarage']:IsVehicleParkedInSpot(plate)
+```
+
+## GetVehicleStatus
+```lua copy
+---@param plate string The plate of the vehicle.
+---@return json vehicleStatus The status of the vehicle.
+
+local vehicleStatus = exports['prism-advancedgarage']:GetVehicleStatus(plate)
+```
+
+## GetGarageInfo
+```lua copy
+---@param garageId string The id of the garage.
+---@return json garageInfo The info of the garage.
+
+local garageInfo = exports['prism-advancedgarage']:GetGarageInfo(garageId)
+```
+
+## GetAllGarages
+```lua copy
+---@return json allGarages The info of all garages.
+
+local allGarages = exports['prism-advancedgarage']:GetAllGarages()
+```
+
+## SetVehicleStoredState
+```lua copy
+---@param plate string The plate of the vehicle.
+---@param garageId string The id of the garage.
+---@param stored boolean Whether the vehicle is stored.
+---@return boolean success Whether the operation was successful.
+
+local success = exports['prism-advancedgarage']:SetVehicleStoredState(plate, garageId, stored)
+```
+
+## TransferVehicleOwnership
+```lua copy
+---@param plate string The plate of the vehicle.
+---@param newOwner string The new owner identifier
+---@param deleteSpawned boolean Whether to delete the spawned vehicle.
+---@return boolean success Whether the operation was successful.
+
+local success = exports['prism-advancedgarage']:TransferVehicleOwnership(plate, newOwner, deleteSpawned)
+```
+
+----
+
+## Client Side Exports
+
+## IsPlayerInsideGarageShell
+```lua copy
+---@return boolean insideShell Whether the player is inside the garage shell.
+
+local insideShell = exports['prism-advancedgarage']:IsPlayerInsideGarageShell()
+```
+
+## IsGarageUIOpen
+```lua copy
+---@return boolean uiOpen Whether the garage UI is open.
+
+local uiOpen = exports['prism-advancedgarage']:IsGarageUIOpen()
+```
+
+## OpenGarage
+```lua copy
+---@return boolean success Whether the operation was successful.
+
+local success = exports['prism-advancedgarage']:OpenGarage()
+```
+
+## CloseGarage
+```lua copy
+---@return boolean success Whether the operation was successful.
+
+local success = exports['prism-advancedgarage']:CloseGarage()
+```

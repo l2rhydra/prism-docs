@@ -135,4 +135,13 @@ export default {
       collapsed: true
     },
   },
+  garage: {
+    title: '🚗 Prism AdvancedGarage',
+    theme: {
+      breadcrumb: false,
+      pagination: true,
+      copyPage: false,
+      collapsed: true
+    },
+  },
 }

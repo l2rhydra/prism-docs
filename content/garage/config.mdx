@@ -1,0 +1,1007 @@
+# Config
+
+<div className='text-lg mt-2'
+    style={{
+        color: 'rgb(185, 198, 162)'
+    }}
+>All Prism Scripts contain various editable and unobscured files containing, exports, client<br/> and server functions, configuration methods and more.</div>
+
+
+```lua filename="config.lua" copy
+--[[
+    ██████╗ ██████╗ ██╗███████╗███╗   ███╗     ██████╗  █████╗ ██████╗  █████╗  ██████╗ ███████╗
+    ██╔══██╗██╔══██╗██║██╔════╝████╗ ████║    ██╔════╝ ██╔══██╗██╔══██╗██╔══██╗██╔════╝ ██╔════╝
+    ██████╔╝██████╔╝██║███████╗██╔████╔██║    ██║  ███╗███████║██████╔╝███████║██║  ███╗█████╗
+    ██╔═══╝ ██╔══██╗██║╚════██║██║╚██╔╝██║    ██║   ██║██╔══██║██╔══██╗██╔══██║██║   ██║██╔══╝
+    ██║     ██║  ██║██║███████║██║ ╚═╝ ██║    ╚██████╔╝██║  ██║██║  ██║██║  ██║╚██████╔╝███████╗
+    ╚═╝     ╚═╝  ╚═╝╚═╝╚══════╝╚═╝     ╚═╝     ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝ ╚══════╝
+]]
+
+Config = {}
+
+--[[ ══════════════════════════════════════════════════════════════════════════
+     CORE SETTINGS
+     ══════════════════════════════════════════════════════════════════════════ ]]
+
+Config.Debug = false                        -- Enable debug prints in console
+
+Config.Framework = 'qbx'                    -- 'qb' | 'qbx' | 'esx'
+Config.InteractionMethod = 'textui'       -- 'drawtext' | 'textui' | 'target'
+
+Config.UniqueGarages = true                 -- Vehicles only retrievable from where they were stored
+Config.ResetGarageOnRestart = true          -- Mark all vehicles as 'stored' on server restart
+Config.UseVehicleImages = true              -- Fetch vehicle images, if false shows car silhouette instead
+
+Config.DutySystem = 'framework'             -- false | 'framework' | 'custom'
+Config.PlayerListType = 'charname'          -- 'charname' | 'txname'
+
+--[[ ══════════════════════════════════════════════════════════════════════════
+     KEYBINDS
+     ══════════════════════════════════════════════════════════════════════════ ]]
+
+Config.Keys = {
+    OpenGarage = 38,                        -- E key - Open garage menu
+    SaveVehicle = 47,                       -- G key - Store vehicle
+}
+
+--[[ ══════════════════════════════════════════════════════════════════════════
+     VISUAL SETTINGS
+     ══════════════════════════════════════════════════════════════════════════ ]]
+
+Config.VehicleImageLocation = 'custom'     -- 'inbuilt' | 'custom'
+
+-- Marker Configuration (shown at garage locations)
+Config.MakerConfig = {
+    enable = true,
+    marker = {
+        markerType = 21,
+        color = { r = 187, g = 239, b = 0, a = 100 },
+        size = { x = 0.5, y = 0.5, z = 0.5 },
+    },
+    bowUpandDown = true,
+    markerVisibilityDistance = 10.0,
+}
+
+-- Ped Configuration (NPC at garage locations)
+Config.PedConfig = {
+    enable = false,
+    model = 'a_m_m_skater_01',
+    anim = {
+        clip = 'anim@amb@clubhouse@tutorial@bkr_tut_ig3@',
+        anim = 'machinic_loop_mechandplayer',
+    },
+    -- Add 'pedHeading' to each garage in Config.Garages to set ped facing direction
+}
+
+--[[ ══════════════════════════════════════════════════════════════════════════
+     MAP BLIPS
+     ══════════════════════════════════════════════════════════════════════════ ]]
+
+Config.StackBlips = true                   -- Stack multiple garage blips
+
+Config.BlipConfiguration = {
+    ['car'] = {
+        sprite = 357,
+        size = 0.5,
+        color = 9,
+    },
+    ['boat'] = {
+        sprite = 410,                       -- Anchor icon
+        size = 0.5,
+        color = 3,                          -- Blue
+    },
+    ['air'] = {
+        sprite = 423,                       -- Plane icon
+        size = 0.5,
+        color = 5,                          -- Yellow
+    },
+}
+
+--[[ ══════════════════════════════════════════════════════════════════════════
+     ECONOMY & FEES
+     ══════════════════════════════════════════════════════════════════════════ ]]
+
+Config.FuelSystem = 'ox_fuel'
+--[[
+    Supported fuel systems:
+    'LegacyFuel', 'ps-fuel', 'lj-fuel', 'ox_fuel', 'cdn-fuel',
+    'hyon_gas_station', 'okokGasStation', 'nd_fuel', 'myFuel',
+    'ti_fuel', 'Renewed-Fuel', 'rcore_fuel', 'lc_fuel', 'none'
+]]
+
+Config.GangSystem = 'auto'
+--[[
+    Gang system integration:
+    'auto'        = Auto-detect (checks rcore_gangs first, then QB/QBX native)
+    'qb'          = QB-Core / QBX native gang system (player.PlayerData.gang)
+    'rcore_gangs' = rcore_gangs resource
+    'custom'      = Custom integration (edit GetPlayerGang in cl_customize.lua)
+    'none'        = Disable gang garage support
+
+    Note: ESX does not have native gang support. For ESX, gangs are typically jobs.
+    Use 'custom' and edit cl_customize.lua to integrate your gang system.
+]]
+
+Config.Fees = {
+    returnVehicle = 500,                    -- Fee to return vehicle to garage remotely
+    transferVehicle = 200,                  -- Fee to transfer vehicle between garages
+    transferToPlayer = 0,                   -- Fee to transfer vehicle to another player
+}
+
+--[[ ══════════════════════════════════════════════════════════════════════════
+     VEHICLE INSURANCE SYSTEM
+     Protects vehicles with coverage for impound fees
+     ══════════════════════════════════════════════════════════════════════════ ]]
+
+Config.Insurance = {
+    enabled = true,
+
+    -- Duration options (in days)
+    duration = 7,                           -- Insurance lasts 7 days (1 week)
+
+    -- Claims limit per week
+    maxClaimsPerWeek = 3,                   -- Maximum claims allowed per week per vehicle
+
+    -- Insurance Tiers
+    tiers = {
+        basic = {
+            label = 'Basic',
+            price = 5000,                   -- Cost to purchase
+            impoundCoverage = 50,           -- Covers 50% of impound fees
+            color = '#9CA3AF',              -- Gray color for UI
+        },
+        standard = {
+            label = 'Standard',
+            price = 15000,
+            impoundCoverage = 75,           -- Covers 75% of impound fees
+            color = '#3B82F6',              -- Blue color for UI
+        },
+        premium = {
+            label = 'Premium',
+            price = 35000,
+            impoundCoverage = 100,          -- Covers 100% of impound fees
+            color = '#F59E0B',              -- Gold color for UI
+        },
+    },
+}
+
+--[[ ══════════════════════════════════════════════════════════════════════════
+     PLAYER VEHICLE TRANSFER
+     Allows players to transfer vehicle ownership to other nearby players
+     ══════════════════════════════════════════════════════════════════════════ ]]
+
+Config.PlayerTransfer = {
+    enabled = true,
+    nearbyRadius = 10.0,                    -- Search radius for nearby players (meters)
+
+    -- Plates that cannot be transferred (exact match, case insensitive)
+    blacklistedPlates = {
+        -- 'YOURPLATE',
+    },
+
+    -- Vehicle models that cannot be transferred
+    blacklistedModels = {
+        -- 'adder',
+        -- 'zentorno',
+    },
+}
+
+--[[ ══════════════════════════════════════════════════════════════════════════
+     GARAGE SHELL SYSTEM
+     Walk-in garage interiors with vehicle display
+     ══════════════════════════════════════════════════════════════════════════ ]]
+
+Config.GarageShells = {
+    enabled = true,
+
+    -- Timing
+    fadeInTime = 500,                       -- Fade in duration (ms)
+    fadeOutTime = 500,                      -- Fade out duration (ms)
+
+    -- Interaction
+    vehicleInteractionDistance = 3.0,       -- Distance to interact with vehicles
+    exitInteractionDistance = 2.0,          -- Distance to interact with exit
+
+    -- Exit Marker
+    exitMarker = {
+        enabled = true,
+        type = 27,                          -- 27 = arrow down, 1 = cylinder, 2 = arrow
+        size = vec3(1.0, 1.0, 1.0),
+        color = { r = 187, g = 239, b = 0, a = 180 },
+        bobUpAndDown = true,
+        rotate = true,
+        drawDistance = 15.0,
+    },
+
+    --[[ Shell Type Definitions
+         Each shell has:
+         - coords: Player spawn point inside shell
+         - vehicleSlots: Positions for displayed vehicles
+         - exitMarker: Exit interaction point
+         - maxVehicles: Maximum vehicles to display
+    ]]
+    Types = {
+        ['luxury'] = {
+            label = 'Luxury Garage',
+            coords = vec4(232.1684, -1062.8225, -19.5957, 91.5128),
+            maxVehicles = 6,
+            exitMarker = vec3(232.1684, -1062.8225, -20.5957),
+            vehicleSlots = {
+                vec4(227.7197, -1058.7601, -19.5956, 90.8810),
+                vec4(219.6120, -1059.3962, -19.5956, 274.5422),
+                vec4(218.0983, -1054.7616, -19.5956, 276.1776),
+                vec4(226.7050, -1053.9661, -19.5956, 89.6279),
+                vec4(218.0499, -1050.1786, -19.5956, 268.1172),
+                vec4(226.8828, -1049.8293, -19.5956, 90.9230),
+            },
+        },
+
+        ['medium'] = {
+            label = 'Standard Garage',
+            coords = vec4(203.9594, -1065.7986, -20.2590, 96.5111),
+            maxVehicles = 4,
+            exitMarker = vec3(203.9594, -1065.7986, -21.2590),
+            vehicleSlots = {
+                vec4(199.5389, -1061.6420, -20.2590, 91.7675),
+                vec4(189.3914, -1061.9902, -20.2590, 278.0482),
+                vec4(189.0933, -1057.5599, -20.2590, 278.4449),
+                vec4(198.1764, -1056.3901, -20.2590, 97.6429),
+            },
+        },
+
+        ['low'] = {
+            label = 'Basic Garage',
+            coords = vec4(171.6117, -1047.294, -16.8241, 270.0),
+            maxVehicles = 2,
+            exitMarker = vec3(181.4626, -1061.8571, -17.8241),
+            vehicleSlots = {
+                vec4(176.0, -1044.5, -16.2, 245.0),
+                vec4(176.0, -1050.0, -16.2, 295.0),
+            },
+        },
+    },
+}
+
+--[[ ══════════════════════════════════════════════════════════════════════════
+     GARAGE LOCATIONS
+
+     Restriction Options:
+     - nil                                          = Public (everyone)
+     - 'police'                                     = Single job (legacy)
+     - { jobs = { 'police', 'ambulance' } }         = Multiple jobs
+     - { jobs = { { name = 'police', minGrade = 2 } } } = Job with grade
+     - { gangs = { 'ballas', 'vagos' } }            = Multiple gangs
+     - { gangs = { { name = 'ballas', minGrade = 2 } } } = Gang with grade
+     - { identifiers = { 'steam:xxx', 'license:xxx' } } = Specific players
+
+     Note: You can combine jobs, gangs, and identifiers in the same restriction.
+     Example: { jobs = { 'police' }, gangs = { 'ballas' }, identifiers = { 'steam:xxx' } }
+
+     Configuration:
+     - key: Unique identifier
+     - label: Display name
+     - garageType: 'car' | 'air' | 'boat'
+     - shellType: Shell interior type (optional)
+     - garageCoords: Menu interaction point
+     - saveVehicleCoords: Store vehicle point (optional, defaults to garageCoords)
+     - vehicleSpawnCoords: Spawn point(s) for retrieved vehicles
+     ══════════════════════════════════════════════════════════════════════════ ]]
+
+Config.Garages = {
+
+    -- ┌─────────────────────────────────────────────────────────────────────┐
+    -- │ CAR GARAGES                                                          │
+    -- └─────────────────────────────────────────────────────────────────────┘
+
+    {
+        key = 'main_garage',
+        label = 'Alta Parking',
+        garageType = 'car',
+        shellType = 'luxury',
+        Restricted = nil,
+        ShowBlip = true,
+        InteractionDistance = 8.0,
+        garageCoords = vec3(-280.8171, -888.1726, 31.3180),
+        saveVehicleCoords = vec3(-292.3788, -891.5609, 31.0806),
+        vehicleSpawnCoords = {
+            vec4(-302.2079, -899.1288, 30.4538, 347.1258),
+        },
+    },
+
+    {
+        key = 'aqua_park',
+        label = 'Aqua Park',
+        garageType = 'car',
+        shellType = 'medium',
+        Restricted = nil,
+        ShowBlip = true,
+        InteractionDistance = 8.0,
+        garageCoords = vec3(-1986.3353, -314.4106, 48.1063),
+        saveVehicleCoords = vec3(45.9619, -851.8999, 30.7489),
+        vehicleSpawnCoords = {
+            vec4(-1985.1097, -325.2712, 48.1058, 239.0992),
+        },
+    },
+
+     {
+        key = 'download_garage',
+        label = 'Downtown LS',
+        garageType = 'car',
+        shellType = 'medium',
+        Restricted = nil,
+        ShowBlip = true,
+        InteractionDistance = 8.0,
+        garageCoords = vec3(44.2421, -842.8994, 31.1263),
+        saveVehicleCoords = vec3(-1996.2347, -318.6690, 48.1063),
+        vehicleSpawnCoords = {
+            vec4(56.8828, -847.5003, 30.2095, 158.8694),
+        },
+    },
+
+    {
+        key = 'mirpark_garage',
+        label = 'Mirror Park',
+        garageType = 'car',
+        shellType = 'low',
+        Restricted = nil,
+        ShowBlip = true,
+        InteractionDistance = 4.0,
+        garageCoords = vec3(984.2171, -206.2227, 71.0677),
+        saveVehicleCoords = vec3(984.6495, -212.9743, 70.0900),
+        vehicleSpawnCoords = {
+            vec4(980.1431, -215.5249, 69.9579, 239.8817),
+        },
+    },
+
+    {
+        key = 'casino_garage',
+        label = 'Diamond Casino',
+        garageType = 'car',
+        shellType = 'luxury',
+        Restricted = nil,
+        ShowBlip = true,
+        InteractionDistance = 5.0,
+        garageCoords = vec3(886.1443, -0.8129, 78.7649),
+        saveVehicleCoords = vec3(878.3010, -10.8749, 78.4374),
+        vehicleSpawnCoords = {
+            vec4(881.8445, -19.1979, 78.1372, 57.9331),
+        },
+    },
+
+    {
+        key = 'vwblvd_garage',
+        label = 'Vinewood BLVD',
+        garageType = 'car',
+        shellType = 'medium',
+        Restricted = nil,
+        ShowBlip = true,
+        InteractionDistance = 4.0,
+        garageCoords = vec3(596.7637, 91.4461, 93.1298),
+        saveVehicleCoords = vec3(610.8406, 86.7256, 92.4857),
+        vehicleSpawnCoords = {
+            vec4(608.7161, 103.7420, 92.1845, 70.5712),
+        },
+    },
+
+    {
+        key = 'clinton_garage',
+        label = 'Clinton Street',
+        garageType = 'car',
+        shellType = 'medium',
+        Restricted = nil,
+        ShowBlip = true,
+        InteractionDistance = 4.0,
+        garageCoords = vec3(362.4664, 298.5387, 103.8838),
+        saveVehicleCoords = vec3(367.4809, 293.8979, 102.9767),
+        vehicleSpawnCoords = {
+            vec4(374.7386, 283.2773, 102.5564, 339.2308),
+        },
+    },
+
+    {
+        key = 'rfhills_garage',
+        label = 'Rockford Hills',
+        garageType = 'car',
+        shellType = 'medium',
+        Restricted = nil,
+        ShowBlip = true,
+        InteractionDistance = 3.5,
+        garageCoords = vec3(-904.1981, -144.1850, 41.8842),
+        saveVehicleCoords = vec3(-905.8797, -149.9886, 42.1842),
+        vehicleSpawnCoords = {
+            vec4(-901.9112, -160.1468, 41.2523, 25.8852),
+        },
+    },
+
+    {
+        key = 'ocnhwy_garage',
+        label = 'Ocean Highway',
+        garageType = 'car',
+        shellType = 'medium',
+        Restricted = nil,
+        ShowBlip = true,
+        InteractionDistance = 4.5,
+        garageCoords = vec3(-2030.5096, -465.4608, 11.6040),
+        saveVehicleCoords = vec3(-2033.6045, -454.8698, 11.8262),
+        vehicleSpawnCoords = {
+            vec4(-2047.6179, -468.4404, 11.0679, 320.3818),
+        },
+    },
+
+    {
+        key = 'airport_garage',
+        label = 'LS Airport',
+        garageType = 'car',
+        shellType = 'medium',
+        Restricted = nil,
+        ShowBlip = true,
+        InteractionDistance = 4.5,
+        garageCoords = vec3(-957.9647, -2704.5303, 13.8310),
+        saveVehicleCoords = vec3(-967.4598, -2703.9656, 13.8426),
+        vehicleSpawnCoords = {
+            vec4(-966.7869, -2711.3694, 13.2051, 8.0524),
+        },
+    },
+
+    {
+        key = 'lsport_garage',
+        label = 'Logistics Port',
+        garageType = 'car',
+        shellType = 'low',
+        Restricted = nil,
+        ShowBlip = true,
+        InteractionDistance = 4.5,
+        garageCoords = vec3(770.6771, -2990.4539, 6.0209),
+        saveVehicleCoords = vec3(763.1734, -2983.1633, 5.5005),
+        vehicleSpawnCoords = {
+            vec4(770.7919, -2970.3418, 5.1737, 114.2813),
+        },
+    },
+
+    {
+        key = 'youtools_garage',
+        label = 'Youtools Parking',
+        garageType = 'car',
+        shellType = 'medium',
+        Restricted = nil,
+        ShowBlip = true,
+        InteractionDistance = 4.5,
+        garageCoords = vec3(2752.8223, 3426.6338, 56.4287),
+        saveVehicleCoords = vec3(2758.0420, 3431.5129, 55.4954),
+        vehicleSpawnCoords = {
+            vec4(2762.7051, 3445.3831, 55.2718, 246.2614),
+        },
+    },
+
+    {
+        key = 'sshores_garage',
+        label = 'Sandy Shores',
+        garageType = 'car',
+        shellType = 'low',
+        Restricted = nil,
+        ShowBlip = true,
+        InteractionDistance = 4.5,
+        garageCoords = vec3(901.0208, 3643.4565, 32.7511),
+        saveVehicleCoords = vec3(889.7629, 3645.7712, 32.1993),
+        vehicleSpawnCoords = {
+            vec4(900.2366, 3649.4993, 32.1208, 89.7120),
+        },
+    },
+
+    {
+        key = 'paleto_garage',
+        label = 'Paleto Bay',
+        garageType = 'car',
+        shellType = 'low',
+        Restricted = nil,
+        ShowBlip = true,
+        InteractionDistance = 4.5,
+        garageCoords = vec3(141.9613, 6617.1362, 32.0501),
+        saveVehicleCoords = vec3(147.8485, 6623.2378, 31.7716),
+        vehicleSpawnCoords = {
+            vec4(137.6383, 6635.8857, 31.0023, 223.5122),
+        },
+    },
+
+
+    -- ┌─────────────────────────────────────────────────────────────────────┐
+    -- │ AIR GARAGES (HANGARS)                                                │
+    -- └─────────────────────────────────────────────────────────────────────┘
+
+    {
+        key = 'lsia_hangar',
+        label = 'LSIA Hangar',
+        garageType = 'air',
+        Restricted = nil,
+        ShowBlip = true,
+        InteractionDistance = 10.0,
+        garageCoords = vec3(-1007.2603, -3015.7573, 13.9450),
+        saveVehicleCoords = vec3(-977.9806, -2996.0190, 13.9451),
+        vehicleSpawnCoords = {
+            vec4(-977.9806, -2996.0190, 13.9451, 73.7610),
+        },
+    },
+
+    {
+        key = 'sandy_airfield',
+        label = 'Sandy Shores Airfield',
+        garageType = 'air',
+        Restricted = nil,
+        ShowBlip = true,
+        InteractionDistance = 10.0,
+        garageCoords = vec3(1738.91, 3285.80, 41.22),
+        vehicleSpawnCoords = {
+            vec4(1738.91, 3295.25, 41.14, 194.22),
+        },
+    },
+
+    -- ┌─────────────────────────────────────────────────────────────────────┐
+    -- │ BOAT GARAGES (MARINAS)                                               │
+    -- └─────────────────────────────────────────────────────────────────────┘
+
+    {
+        key = 'vespucci_marina',
+        label = 'Vespucci Marina',
+        garageType = 'boat',
+        Restricted = nil,
+        ShowBlip = true,
+        InteractionDistance = 5.0,
+        garageCoords = vec3(-849.54, -1368.71, 1.60),
+        vehicleSpawnCoords = {
+            vec4(-851.17, -1372.91, 0.15, 110.32),
+        },
+    },
+
+    {
+        key = 'paleto_dock',
+        label = 'Paleto Bay Dock',
+        garageType = 'boat',
+        Restricted = nil,
+        ShowBlip = true,
+        InteractionDistance = 5.0,
+        garageCoords = vec3(-280.17, 6635.71, 7.50),
+        vehicleSpawnCoords = {
+            vec4(-289.23, 6637.96, 0.50, 225.59),
+        },
+    },
+}
+
+--[[ ══════════════════════════════════════════════════════════════════════════
+     IMPOUND SYSTEM
+     Police impound system for storing seized vehicles
+     ══════════════════════════════════════════════════════════════════════════ ]]
+
+Config.Impound = {
+    enabled = true,
+    command = 'impound',                    -- Chat command to open impound menu
+    defaultCost = 250,                      -- Default retrieval fee
+    allowedJobs = { 'police', 'sheriff' },  -- Jobs that can impound vehicles
+
+    Locations = {
+
+        -- Car Impounds
+        {
+            key = 'impound_main',
+            label = 'LSPD Impound Lot',
+            garageType = 'car',
+            coords = vec3(409.58, -1623.0, 29.29),
+            spawnCoords = vec4(421.0404, -1639.0005, 28.6653, 89.3091),
+            interactionDistance = 5.0,
+            showBlip = true,
+            blipSprite = 68,
+            blipColor = 1,
+        },
+
+        {
+            key = 'impound_sandy',
+            label = 'Sandy Shores Impound',
+            garageType = 'car',
+            coords = vec3(1737.28, 3710.58, 33.96),
+            spawnCoords = vec4(1730.5837, 3710.0576, 33.5674, 19.4629),
+            interactionDistance = 5.0,
+            showBlip = true,
+            blipSprite = 68,
+            blipColor = 1,
+        },
+
+        -- Air Impounds
+        {
+            key = 'impound_air_lsia',
+            label = 'LSIA Aircraft Impound',
+            garageType = 'air',
+            coords = vec3(-1242.97, -3390.25, 13.94),
+            spawnCoords = vec4(-1245.4323, -3363.7173, 13.8421, 331.6489),
+            interactionDistance = 10.0,
+            showBlip = true,
+            blipSprite = 423,
+            blipColor = 1,
+        },
+
+        -- Boat Impounds
+        {
+            key = 'impound_boat_vespucci',
+            label = 'Vespucci Boat Impound',
+            garageType = 'boat',
+            coords = vec3(-772.99, -1430.64, 1.60),
+            spawnCoords = vec4(-784.9739, -1430.5221, 0.3701, 137.3492),
+            interactionDistance = 5.0,
+            showBlip = true,
+            blipSprite = 410,
+            blipColor = 1,
+        },
+    },
+}
+
+--[[ ══════════════════════════════════════════════════════════════════════════
+     PARKING GARAGE SYSTEM
+     Paid parking spots with vehicle protection
+
+     Spot Types:
+     - public: Hourly rate, first-come-first-served
+     - reserved: Weekly/monthly rental, dedicated spot
+     - vip: One-time purchase, permanent ownership
+
+     Security Features:
+     - Protected vehicles cannot be damaged
+     - Theft attempts trigger police alerts
+     - Only spot owner can retrieve (reserved/vip)
+     ══════════════════════════════════════════════════════════════════════════ ]]
+
+Config.ParkingGarage = {
+    enabled = true,
+
+    -- Police Alerts
+    alertPolice = true,
+    alertPoliceJobs = { 'police', 'sheriff' },
+    alertCooldown = 60,                     -- Seconds between alerts
+
+    -- Pricing
+    pricing = {
+        public = {
+            hourly = 50,
+            daily = 300,
+            weekly = 1500,
+        },
+        reserved = {
+            weekly = 2500,
+            monthly = 8000,
+        },
+        vip = {
+            purchase = 50000,
+        },
+    },
+
+    -- Overstay Fines
+    overstay = {
+        enabled = true,
+        baseFine = 500,                     -- Base fine when parking expires
+        finePerHour = 100,                  -- Additional fine per hour overstayed
+        maxFine = 5000,                     -- Maximum fine cap
+    },
+
+    -- Parking Locations
+    Locations = {
+        {
+            key = 'parking_legion',
+            label = 'Legion Parking',
+            coords = vec3(215.88, -810.05, 30.73),
+            interactionDistance = 3.0,
+            showBlip = true,
+            blipSprite = 357,
+            blipColor = 5,
+            spots = {
+                { id = 1, type = 'public',   coords = vec4(220.4438, -806.4048, 30.6950, 255.4166), label = 'P1' },
+                { id = 2, type = 'public',   coords = vec4(222.0827, -801.3295, 30.6950, 248.3014), label = 'P2' },
+                { id = 3, type = 'public',   coords = vec4(223.7959, -796.2602, 30.6950, 248.9901), label = 'P3' },
+                { id = 4, type = 'public',   coords = vec4(225.6297, -791.1799, 30.6950, 248.9879), label = 'P4' },
+                { id = 5, type = 'public',   coords = vec4(227.9413, -786.2654, 30.6950, 249.1690), label = 'P5' },
+                { id = 6, type = 'public',   coords = vec4(229.6837, -781.2510, 30.6950, 250.1007), label = 'P6' },
+                { id = 7, type = 'public',   coords = vec4(231.3481, -775.9769, 30.7150, 248.3165), label = 'P7' },
+                { id = 8, type = 'public',   coords = vec4(233.4061, -771.0566, 30.7550, 249.8344), label = 'P8' },
+                { id = 9, type = 'reserved', coords = vec4(206.6083, -798.3619, 30.9950, 248.3303),  label = 'R1' },
+                { id = 10, type = 'reserved', coords = vec4(208.4554, -793.3810, 30.9550, 248.6630),  label = 'R2' },
+                { id = 11, type = 'vip', coords = vec4(210.1602, -788.3251, 30.9550, 248.2271),  label = 'V1' },
+                { id = 12, type = 'vip', coords = vec4(212.0291, -783.2988, 30.9550, 249.1403),  label = 'V2' },
+            },
+        },
+    },
+}
+
+--[[ ══════════════════════════════════════════════════════════════════════════
+     VEHICLE KEYS SYSTEM
+     Built-in vehicle keys, hotwiring, and lockpicking
+
+     External Key System Options:
+     - 'builtin'           = Use this script's key system (default)
+     - 'none'              = Disable key management entirely
+     - 'qb-vehiclekeys'    = QB VehicleKeys
+     - 'jaksam-vehicles-keys' = Jaksam Vehicle Keys
+     - 'mk_vehiclekeys'    = MK Vehicle Keys
+     - 'qs-vehiclekeys'    = Quasar Vehicle Keys
+     - 'wasabi_carlock'    = Wasabi Carlock
+     - 'cd_garage'         = CD Garage Keys
+     - 'okokGarage'        = OKOK Garage Keys
+     - 't1ger_keys'        = T1ger Keys
+     - 'MrNewbVehicleKeys' = MrNewb Vehicle Keys
+     - 'Renewed'           = Renewed Scripts
+     - 'tgiann-hotwire'    = TGiann Hotwire
+     - 'qbx_vehiclekeys'   = QBX Vehicle Keys
+     - 'qs-advancedgarages' = Quasar Advanced Garages
+     ══════════════════════════════════════════════════════════════════════════ ]]
+
+Config.VehicleKeys = {
+    ENABLE = true,
+    externalKeySystem = 'builtin',          -- External key system (see options above)
+    allow_shared_keys = true,               -- Owners can share keys with others
+    clearSharedKeysOnRestart = true,        -- Remove shared keys on restart
+    command = 'keys',                       -- Command to open keys UI
+
+    -- Hotwire System
+    Hotwire = {
+        ENABLE = true,
+        key = 'X',                          -- Key to start hotwiring
+
+        -- Action bar difficulty settings
+        -- seconds: Time for bar to travel (1-10, lower = faster)
+        -- size: Target bar width (10-100, higher = easier)
+        -- chances: Attempts per stage
+        ActionBar = {
+            [1] = { seconds = 6, size = 30, chances = 3 },
+            [2] = { seconds = 3, size = 20, chances = 2 },
+            [3] = { seconds = 2, size = 10, chances = 1 },
+        },
+    },
+
+    -- Lock System
+    Lock = {
+        ENABLE = true,
+        lock_from_inside = true,            -- Lock from inside prevents exit
+        command = 'vehlock',
+        key = 'L',
+        sound = {
+            volume = 0.5,                   -- Volume (0.0 - 1.0)
+            lockSound = 'lock.ogg',         -- Sound file for locking (in web/build/sounds/)
+            unlockSound = 'unlock.ogg',     -- Sound file for unlocking (in web/build/sounds/)
+        },
+    },
+
+    -- Lockpick System
+    Lockpick = {
+        ENABLE = true,
+        command = {
+            ENABLE = true,
+            chat_command = 'lockpick',
+        },
+        usable_item = {
+            ENABLE = true,
+            item_name = 'lockpick',
+        },
+    },
+}
+
+--[[ ══════════════════════════════════════════════════════════════════════════
+     ADMIN COMMANDS
+     Commands for vehicle management (requires ace permissions)
+     ══════════════════════════════════════════════════════════════════════════ ]]
+
+Config.AdminCommands = {
+    enabled = true,                         -- Enable/disable all admin commands
+    acePermission = 'group.admin',          -- Required ACE permission
+
+    -- /givevehicle [playerid] [plate?] - Sit in vehicle and give to player
+    givevehicle = {
+        enabled = true,
+        command = 'givevehicle',
+        defaultGarage = 'main_garage',      -- Default garage for given vehicles
+    },
+
+    -- /removevehicle [plate] - Remove vehicle from database
+    removevehicle = {
+        enabled = true,
+        command = 'removevehicle',
+    },
+
+    -- /setvehicleowner [plate] [playerid] - Transfer ownership
+    setvehicleowner = {
+        enabled = true,
+        command = 'setvehicleowner',
+    },
+
+    -- /listvehicles [playerid] - List player's vehicles
+    listvehicles = {
+        enabled = true,
+        command = 'listvehicles',
+    },
+}
+
+--[[ ══════════════════════════════════════════════════════════════════════════
+     JOB GARAGE SYSTEM
+     Specialized garages for job vehicles
+     ══════════════════════════════════════════════════════════════════════════ ]]
+
+Config.JobGarages = {
+    enabled = true,
+    shareKeys = true,                       -- Share keys between job members
+
+    --[[ Job Locations
+         Each job can have multiple garage locations
+         - uiTagColor: Color for "Job Vehicle" tag in UI (hex)
+         - garages: Array of garage locations
+    ]]
+    Locations = {
+
+        ['police'] = {
+            uiTagColor = '#3b82f6',         -- Blue
+            garages = {
+                {
+                    label = 'MRPD Garage',
+                    garageType = 'car',
+                    coords = vec3(451.27, -1016.05, 28.48),
+                    spawnCoords = vec4(450.19, -1021.18, 28.4, 93.47),
+                    interactionDistance = 10.0,
+                    showBlip = true,
+                    blipSprite = 357,
+                    blipColor = 3,
+                },
+                {
+                    label = 'MRPD Helipad',
+                    garageType = 'air',
+                    coords = vec3(449.27, -981.24, 43.69),
+                    spawnCoords = vec4(449.27, -981.24, 43.69, 94.13),
+                    interactionDistance = 5.0,
+                    showBlip = true,
+                    blipSprite = 43,
+                    blipColor = 3,
+                },
+            },
+        },
+
+        ['ambulance'] = {
+            uiTagColor = '#ef4444',         -- Red
+            garages = {
+                {
+                    label = 'Pillbox Garage',
+                    garageType = 'car',
+                    coords = vec3(294.35, -607.89, 43.33),
+                    spawnCoords = vec4(294.35, -607.89, 43.33, 74.04),
+                    interactionDistance = 10.0,
+                    showBlip = true,
+                    blipSprite = 357,
+                    blipColor = 1,
+                },
+                {
+                    label = 'Pillbox Helipad',
+                    garageType = 'air',
+                    coords = vec3(352.22, -588.03, 74.17),
+                    spawnCoords = vec4(352.22, -588.03, 74.17, 74.5),
+                    interactionDistance = 10.0,
+                    showBlip = true,
+                    blipSprite = 43,
+                    blipColor = 1,
+                },
+            },
+        },
+    },
+
+    --[[ Job Vehicles
+         - model: Vehicle spawn name (required)
+         - label: Display name (optional)
+         - plate: License plate prefix (required)
+         - minGrade: Minimum job grade (default: 0)
+         - garageType: 'car' | 'air' | 'boat'
+         - maxUpgrades: Apply max performance upgrades
+         - livery: Livery index (optional)
+         - extras: Extras to enable { 1, 2, 3 } or true for all
+    ]]
+    Vehicles = {
+
+        ['police'] = {
+            { model = 'police',   label = 'Police Cruiser',   plate = 'PD', minGrade = 0, garageType = 'car',  maxUpgrades = true, livery = 0, extras = true },
+            { model = 'police2',  label = 'Police Cruiser 2', plate = 'PD', minGrade = 0, garageType = 'car',  maxUpgrades = true, extras = true },
+            { model = 'police3',  label = 'Police Cruiser 3', plate = 'PD', minGrade = 2, garageType = 'car',  maxUpgrades = true, extras = { 1, 2 } },
+            { model = 'policeb',  label = 'Police Bike',      plate = 'PD', minGrade = 0, garageType = 'car',  maxUpgrades = true },
+            { model = 'polmav',   label = 'Police Maverick',  plate = 'PD', minGrade = 3, garageType = 'air',  maxUpgrades = true, extras = true, livery = 1 },
+            { model = 'predator', label = 'Police Predator',  plate = 'PD', minGrade = 0, garageType = 'boat', maxUpgrades = true },
+        },
+
+        ['ambulance'] = {
+            { model = 'ambulance', label = 'Ambulance',          plate = 'EMS', minGrade = 0, garageType = 'car', maxUpgrades = true, livery = 2, extras = true },
+            { model = 'polmav',    label = 'Medical Helicopter', plate = 'EMS', minGrade = 2, garageType = 'air', maxUpgrades = true },
+        },
+    },
+}
+
+--[[ ══════════════════════════════════════════════════════════════════════════
+     GANG GARAGE SYSTEM
+     Specialized garages for gang vehicles
+
+     Requires Config.GangSystem to be configured (auto, qb, rcore_gangs, custom)
+     ══════════════════════════════════════════════════════════════════════════ ]]
+
+Config.GangGarages = {
+    enabled = true,
+    shareKeys = true,                       -- Share keys between gang members
+
+    --[[ Gang Locations
+         Each gang can have multiple garage locations
+         - uiTagColor: Color for "Gang Vehicle" tag in UI (hex)
+         - garages: Array of garage locations
+         - useOwnedVehicles: If true, uses player's owned vehicles instead of predefined (default: false)
+    ]]
+    Locations = {
+
+        ['ballas'] = {
+            uiTagColor = '#9333ea',         -- Purple
+            useOwnedVehicles = false,       -- Use predefined vehicles
+            garages = {
+                {
+                    label = 'Ballas HQ Garage',
+                    garageType = 'car',
+                    coords = vec3(89.91, -1959.37, 20.74),
+                    spawnCoords = vec4(86.21, -1959.97, 20.74, 320.0),
+                    interactionDistance = 5.0,
+                    showBlip = false,
+                },
+            },
+        },
+
+        ['vagos'] = {
+            uiTagColor = '#eab308',         -- Yellow
+            useOwnedVehicles = false,       -- Use predefined vehicles
+            garages = {
+                {
+                    label = 'Vagos HQ Garage',
+                    garageType = 'car',
+                    coords = vec3(325.29, -2043.92, 20.99),
+                    spawnCoords = vec4(329.21, -2036.82, 20.99, 139.0),
+                    interactionDistance = 5.0,
+                    showBlip = false,
+                },
+            },
+        },
+
+        --[[ Example with owned vehicles (personal vehicles stored in gang garage):
+        ['example_gang'] = {
+            uiTagColor = '#22c55e',
+            useOwnedVehicles = true,        -- Use player's owned vehicles
+            garages = {
+                {
+                    label = 'Gang Personal Garage',
+                    garageType = 'car',
+                    coords = vec3(0.0, 0.0, 0.0),
+                    spawnCoords = vec4(0.0, 0.0, 0.0, 0.0),
+                    interactionDistance = 5.0,
+                    showBlip = false,
+                },
+            },
+        },
+        ]]
+    },
+
+    --[[ Gang Vehicles (for gangs with useOwnedVehicles = false)
+         - model: Vehicle spawn name (required)
+         - label: Display name (optional)
+         - plate: License plate prefix (required)
+         - minGrade: Minimum gang grade (default: 0)
+         - garageType: 'car' | 'air' | 'boat'
+         - maxUpgrades: Apply max performance upgrades
+         - livery: Livery index (optional)
+         - extras: Extras to enable { 1, 2, 3 } or true for all
+    ]]
+    Vehicles = {
+
+        ['ballas'] = {
+            { model = 'buccaneer',  label = 'Buccaneer',    plate = 'BALLAS', minGrade = 0, garageType = 'car', maxUpgrades = true },
+            { model = 'peyote',     label = 'Peyote',       plate = 'BALLAS', minGrade = 0, garageType = 'car', maxUpgrades = true },
+            { model = 'tornado',    label = 'Tornado',      plate = 'BALLAS', minGrade = 1, garageType = 'car', maxUpgrades = true },
+        },
+
+        ['vagos'] = {
+            { model = 'chino',      label = 'Chino',        plate = 'VAGOS', minGrade = 0, garageType = 'car', maxUpgrades = true },
+            { model = 'buccaneer2', label = 'Buccaneer 2',  plate = 'VAGOS', minGrade = 0, garageType = 'car', maxUpgrades = true },
+            { model = 'faction',    label = 'Faction',      plate = 'VAGOS', minGrade = 1, garageType = 'car', maxUpgrades = true },
+        },
+    },
+}
+
+```
