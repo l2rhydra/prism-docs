@@ -153,4 +153,13 @@ export default {
       collapsed: true
     },
   },
+  chat: {
+    title: '💬 Prism Chat',
+    theme: {
+      breadcrumb: false,
+      pagination: true,
+      copyPage: false,
+      collapsed: true
+    },
+  },
 }
