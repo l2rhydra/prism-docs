@@ -81,6 +81,15 @@ export default {
       collapsed: true
     },
   },
+  billing: {
+    title: '💳 Prism Billing',
+    theme: {
+      breadcrumb: false,
+      pagination: true,
+      copyPage: false,
+      collapsed: true
+    },
+  },
   blackmarket: {
     title: '🛒 Prism Black Market',
     theme: {

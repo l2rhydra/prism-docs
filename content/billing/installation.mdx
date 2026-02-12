@@ -1,0 +1,139 @@
+import { Callout } from 'nextra/components'
+
+# Installation
+
+<div className='text-lg mt-2'
+    style={{
+        color: 'rgb(185, 198, 162)'
+    }}
+>Basic installation instructions for prism_billing</div>
+
+
+## Asset download
+
+<Callout type="info">
+  To find the asset, you must have made the purchase using your own keymaster account. Otherwise, you can use the transfer system to move the asset to a different keymaster account.
+</Callout>
+
+<div className='text-lg mt-5'>
+    Once the purchase is made on our official website, you will receive your asset directly in your [cfx portal](https://portal.cfx.re/) in your own panel you can download the asset and install it following the following documentation.
+</div>
+
+## Dependencies
+
+<Callout type="warning">
+  Make sure you have the following dependencies installed before using prism_billing:
+</Callout>
+
+- **ox_lib** - Required for UI and callback systems
+- **Framework** - ESX or QBCore (automatically detected)
+- **ox_inventory** - Required for inventory integration
+
+## Item Configuration
+
+### ox_inventory
+
+Add the following items to your `ox_inventory/data/items.lua`:
+
+```lua copy
+["portable_billing"] = {
+    label = "Portable Billing Device",
+    weight = 100,
+    stack = true,
+    consume = 0,
+    close = true,
+    server = {
+        export = 'prism-billing.UsePortableBilling'
+    }
+},
+["invoice_receipt"] = {
+    label = "Invoice Receipt",
+    weight = 5,
+    stack = false,
+    consume = 0,
+    close = true,
+    server = {
+        export = 'prism-billing.UseInvoiceReceipt'
+    }
+},
+```
+
+### QBCore
+
+Add the following items to your `qb-core/shared/items.lua`:
+
+```lua copy
+portable_billing = {
+    name = 'portable_billing',
+    label = 'Portable Billing Device',
+    weight = 100,
+    type = 'item',
+    image = 'portable_billing.png',
+    unique = false,
+    useable = true,
+    shouldClose = true,
+    combinable = nil,
+    description = 'A portable device for creating invoices'
+},
+invoice_receipt = {
+    name = 'invoice_receipt',
+    label = 'Invoice Receipt',
+    weight = 5,
+    type = 'item',
+    image = 'invoice_receipt.png',
+    unique = true,
+    useable = true,
+    shouldClose = true,
+    combinable = nil,
+    description = 'An invoice receipt'
+},
+```
+
+## Database Setup
+
+<Callout type="info">
+  The billing system will automatically create the required database tables on first startup. No manual SQL execution is required.
+</Callout>
+
+The following tables will be created:
+- `prism_billing_invoices` - Stores all invoice records
+- `prism_billing_categories` - Stores billing categories for different jobs
+- `prism_billing_logs` - Stores transaction logs
+
+## Installation
+
+- **Download the asset from your [cfx portal](https://portal.cfx.re/)**
+- **Extract the files** and rename the folder to `prism_billing`
+- **Add item images** from `prism_billing/images/` to your inventory image folder
+- **Configure the script** as desired (see [Config](/billing/config))
+- **Add to server.cfg**: `ensure prism_billing` after your framework and dependencies
+- **Configure job permissions** in the config file for billing access
+- **Restart your server**
+
+## Post-Installation Setup
+
+### Permission Setup
+
+<Callout type="warning">
+  The billing system uses your framework's job system for permissions. Players with appropriate jobs will automatically have access to create invoices.
+</Callout>
+
+Configure the billing settings in the config file according to your server's needs. See the [Config](/billing/config) page for all available options.
+
+## Troubleshooting
+
+<Callout type="error">
+  Common issues and their solutions:
+</Callout>
+
+1. **"Billing device not working"** - Ensure the player has the `portable_billing` item and the job is configured
+2. **"Cannot pay invoice"** - Check that the player has sufficient funds in their bank account
+3. **"Database error"** - Verify that your database connection is properly configured
+4. **"Items not showing"** - Make sure item images are in the correct inventory folder
+
+## Next Steps
+
+- Configure the billing system settings in [Config](/billing/config)
+- Learn about available exports in [Exports](/billing/exports)
+- Set up job-specific billing categories
+- Test the system with different job roles
