@@ -17,7 +17,7 @@ export default {
     type: 'separator',
     title: 'Prism Scripts'
   },
-  pausemenu : {
+  pausemenu: {
     title: '🖼️ Prism Pause Menu',
     theme: {
       breadcrumb: false,
@@ -71,7 +71,7 @@ export default {
       collapsed: true
     },
   },
-  
+
   banking: {
     title: '🏦 Prism Banking',
     theme: {
@@ -90,7 +90,7 @@ export default {
       collapsed: true
     },
   },
-  battlepass : {
+  battlepass: {
     title: '🎮 Prism Battle Pass',
     theme: {
       breadcrumb: false,
@@ -162,4 +162,13 @@ export default {
       collapsed: true
     },
   },
+  radio: {
+    title: '🔊 Prism Radio',
+    theme: {
+      breadcrumb: false,
+      pagination: true,
+      copyPage: false,
+      collapsed: true
+    },
+  }
 }

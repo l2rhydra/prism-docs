@@ -1,0 +1,123 @@
+# Exports
+
+## Client Side Exports
+
+### Radio
+
+#### `isRadioOpen`
+
+Check whether the radio UI is currently open.
+
+```lua copy
+exports['prism_radio']:isRadioOpen()
+```
+
+**Returns**
+
+- `boolean` — `true` if the radio UI is open, otherwise `false`
+
+---
+
+#### `isConnected`
+
+Check whether the player is currently connected to a radio frequency.
+
+```lua copy
+exports['prism_radio']:isConnected()
+```
+
+**Returns**
+
+- `boolean` — `true` if connected to a frequency, otherwise `false`
+
+---
+
+#### `getCurrentFrequency`
+
+Get the current radio frequency the player is connected to.
+
+```lua copy
+exports['prism_radio']:getCurrentFrequency()
+```
+
+**Returns**
+
+- `number | nil` — The current frequency, or `nil` if not connected
+
+---
+
+#### `openRadio`
+
+Open the radio UI.
+
+```lua copy
+exports['prism_radio']:openRadio()
+```
+
+---
+
+#### `closeRadio`
+
+Close the radio UI.
+
+```lua copy
+exports['prism_radio']:closeRadio()
+```
+
+> Automatically re-enables the radio if it was previously disabled.
+
+---
+
+#### `toggleRadio`
+
+Toggle the radio UI state.
+
+```lua copy
+exports['prism_radio']:toggleRadio()
+```
+
+---
+
+#### `setRadioEnabled`
+
+Enable or disable the radio entirely.
+
+```lua copy
+exports['prism_radio']:setRadioEnabled(enabled)
+```
+
+**Parameters**
+
+- `enabled` (`boolean`) — Whether the radio should be enabled
+
+> If set to `false` while the radio is open, it will be closed automatically.
+
+---
+
+### Radio & HUD
+
+#### `getHudMembers`
+
+Get the list of members currently displayed in the radio HUD.
+
+```lua copy
+exports['prism_radio']:getHudMembers()
+```
+
+**Returns**
+
+- `{ name: string; isSpeaking: boolean }[]` — An array containing the current HUD members
+
+---
+
+#### `isHudVisible`
+
+Check whether the radio HUD is currently visible.
+
+```lua copy
+exports['prism_radio']:isHudVisible()
+```
+
+**Returns**
+
+- `boolean` — `true` if the HUD is visible, otherwise `false`
