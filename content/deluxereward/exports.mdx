@@ -714,11 +714,7 @@ Trigger custom quest progress from your own scripts. Useful for integrating with
 
 ```lua copy
 -- Trigger custom quest progress from your scripts
-TriggerServerEvent('prism_reward:server:UpdateQuestProgress', {
-    type = 'custom',
-    questId = 'my_custom_quest',
-    progress = 1
-})
+TriggerServerEvent('prism_rewards:server:CustomQuestUpdate', questId)
 ```
 
 ---
