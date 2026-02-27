@@ -17,7 +17,7 @@ export default {
     type: 'separator',
     title: 'Prism Scripts'
   },
-  pausemenu : {
+  pausemenu: {
     title: '🖼️ Prism Pause Menu',
     theme: {
       breadcrumb: false,
@@ -71,9 +71,18 @@ export default {
       collapsed: true
     },
   },
-  
+
   banking: {
     title: '🏦 Prism Banking',
+    theme: {
+      breadcrumb: false,
+      pagination: true,
+      copyPage: false,
+      collapsed: true
+    },
+  },
+  billing: {
+    title: '💳 Prism Billing',
     theme: {
       breadcrumb: false,
       pagination: true,
@@ -90,7 +99,7 @@ export default {
       collapsed: true
     },
   },
-  battlepass : {
+  battlepass: {
     title: '🎮 Prism Battle Pass',
     theme: {
       breadcrumb: false,
@@ -155,6 +164,24 @@ export default {
   },
   chat: {
     title: '💬 Prism Chat',
+    theme: {
+      breadcrumb: false,
+      pagination: true,
+      copyPage: false,
+      collapsed: true
+    },
+  },
+  deluxereward: {
+    title: '🎁 Prism Deluxe Reward',
+    theme: {
+      breadcrumb: false,
+      pagination: true,
+      copyPage: false,
+      collapsed: true
+    },
+  },
+  radio: {
+    title: '🔊 Prism Radio',
     theme: {
       breadcrumb: false,
       pagination: true,

@@ -17,8 +17,17 @@ export default {
       collapsed: true
     },
   },
+  tebex: {
+    title: 'Tebex Integration',
+    theme: {
+      breadcrumb: false,
+      pagination: true,
+      copyPage: false,
+      collapsed: true
+    },
+  },
   exports: {
-    title: 'Exports',
+    title: 'Exports & Quest Types',
     theme: {
       breadcrumb: false,
       pagination: true,

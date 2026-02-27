@@ -1,0 +1,329 @@
+import { Callout } from 'nextra/components'
+
+# Configuration
+
+<div className='text-lg mt-2'
+    style={{
+        color: 'rgb(185, 198, 162)'
+    }}
+>Complete configuration guide for prism_billing</div>
+
+## Basic Configuration
+
+```lua copy
+Config = {}
+
+-- Framework (auto-detect or set manually: 'esx', 'qbcore', 'standalone')
+Config.Framework = 'auto'
+
+-- Default currency symbol
+Config.CurrencySymbol = '$'
+
+-- Primary color for UI (hex color)
+Config.PrimaryColor = '#BEEE11'
+
+-- Key to open billing menu (https://docs.fivem.net/docs/game-references/controls/)
+Config.OpenKey = 38 -- E key
+
+-- Interaction Type
+Config.Interaction = 'textui' -- Options: 'default', 'textui'
+
+-- Distance to interact with zones
+Config.InteractionDistance = 2.0
+
+-- Enable debug mode
+Config.Debug = false
+```
+
+## Language Configuration
+
+To set the language for the billing system, add the following convar to your server configuration file (`server.cfg`):
+
+```bash copy
+setr billing:locale "en"
+```
+
+<Callout type="info">
+  Available language codes depend on your installed locale files. Common options include:
+  - `en` - English
+  - `es` - Spanish
+  - `fr` - French
+  - `de` - German
+  - `pt` - Portuguese
+</Callout>
+
+The locale setting will automatically apply to all billing UI elements and text.
+
+## Tax Configuration
+
+```lua copy
+-- Tax percentage applied to all invoices
+Config.TaxPercentage = 10.0
+```
+
+## Payment Methods
+
+Configure which payment methods are available for customers:
+
+```lua copy
+-- Payment methods available
+Config.PaymentMethods = {
+    cash = true,
+    bank = true,
+    card = true
+}
+```
+
+## Welcome Text Configuration
+
+### Customer Interface
+
+Configure the welcome text shown to customers when they interact with a billing zone:
+
+```lua copy
+-- Welcome text for regular billing interface (customer-facing)
+Config.WelcomeText = {
+    title = "Welcome to {store_name}",
+    subtitle = "Browse {store_name}'s products and select what you need",
+    description = "Add items to your cart and we'll send you an invoice from {store_name} to complete your purchase."
+}
+```
+
+<Callout type="info">
+  The welcome text supports placeholders that are automatically replaced:
+  - `{store_name}` - The name of the store
+  - `{store_description}` - Store description
+  - `{store_owner}` - Store owner name
+</Callout>
+
+### Admin Interface
+
+Configure the welcome text for the admin panel:
+
+```lua copy
+-- Welcome text for admin interface
+Config.AdminWelcomeText = {
+    title = "Welcome to Billing Admin",
+    subtitle = "The panel allows you to manage all billing companies on the server in a simple and organized way",
+    description = "Through it, admins can create, edit, and remove billing companies as needed."
+}
+```
+
+### Placeholder Function
+
+The system includes a function to replace placeholders in text:
+
+```lua copy
+-- Function to replace placeholders in welcome text
+Config.ReplacePlaceholders = function(text, storeData)
+    if not text or not storeData then return text end
+    
+    local result = text
+    result = string.gsub(result, "{store_name}", storeData.store_name or "Our Store")
+    result = string.gsub(result, "{store_description}", storeData.description or "")
+    result = string.gsub(result, "{store_owner}", storeData.owner or "")
+    
+    return result
+end
+```
+
+## Admin Permission Configuration
+
+<Callout type="warning">
+  **Important:** You must customize this function for your server's permission system. The default allows all players, which should NOT be used in production!
+</Callout>
+
+```lua copy
+-- Admin permission check function
+-- Customize this based on your server's permission system
+Config.IsAdmin = function(source)
+    -- CUSTOMIZE THIS FUNCTION FOR YOUR SERVER
+    
+    -- Example for ESX with ace permissions
+    -- return IsPlayerAceAllowed(source, 'billing.admin')
+    
+    -- Example for QBCore with permissions
+    -- local Player = QBCore.Functions.GetPlayer(source)
+    -- return Player.PlayerData.job.name == 'admin' or Player.Functions.HasPermission('billing.admin')
+    
+    -- Default: Allow all players (CHANGE THIS FOR PRODUCTION)
+    return true
+end
+```
+
+### Common Permission Examples
+
+**ESX with ACE Permissions:**
+```lua copy
+Config.IsAdmin = function(source)
+    return IsPlayerAceAllowed(source, 'billing.admin')
+end
+```
+
+**QBCore with Job Check:**
+```lua copy
+Config.IsAdmin = function(source)
+    local Player = QBCore.Functions.GetPlayer(source)
+    return Player and (Player.PlayerData.job.name == 'admin' or 
+           QBCore.Functions.HasPermission(source, 'admin'))
+end
+```
+
+**ESX with Group Check:**
+```lua copy
+Config.IsAdmin = function(source)
+    local xPlayer = ESX.GetPlayerFromId(source)
+    return xPlayer and (xPlayer.getGroup() == 'admin' or xPlayer.getGroup() == 'superadmin')
+end
+```
+
+## Society Payment Configuration
+
+<Callout type="warning">
+  This function must be configured for your specific society/management system!
+</Callout>
+
+```lua copy
+--- Add money to society/job account
+--- @param societyName string The society/job name (e.g., 'restaurant', 'shop')
+--- @param amount number Amount to add to society account
+--- @return boolean success Whether the operation succeeded
+Config.AddMoneyToSociety = function(societyName, amount)
+    -- CUSTOMIZE THIS FUNCTION FOR YOUR SERVER
+    
+    -- Example for ESX (esx_society)
+    -- if GetResourceState('esx_society') == 'started' then
+    --     TriggerEvent('esx_addonaccount:getSharedAccount', 'society_' .. societyName, function(account)
+    --         if account then
+    --             account.addMoney(amount)
+    --         end
+    --     end)
+    --     return true
+    -- end
+    
+    -- Example for QBCore (qb-management)
+    -- if GetResourceState('qb-management') == 'started' then
+    --     exports['qb-management']:AddMoney(societyName, amount)
+    --     return true
+    -- end
+    
+    -- Example for custom society system
+    -- TriggerEvent('yourscript:addSocietyMoney', societyName, amount)
+    
+    -- Default: Log to console (replace with your implementation)
+    print(string.format('^2[Billing]^7 Society Payment: %s received $%.2f', societyName, amount))
+    
+    return true
+end
+```
+
+### Society System Examples
+
+**ESX with esx_society:**
+```lua copy
+Config.AddMoneyToSociety = function(societyName, amount)
+    if GetResourceState('esx_society') == 'started' then
+        TriggerEvent('esx_addonaccount:getSharedAccount', 'society_' .. societyName, function(account)
+            if account then
+                account.addMoney(amount)
+            end
+        end)
+        return true
+    end
+    return false
+end
+```
+
+**QBCore with qb-management:**
+```lua copy
+Config.AddMoneyToSociety = function(societyName, amount)
+    if GetResourceState('qb-management') == 'started' then
+        exports['qb-management']:AddMoney(societyName, amount)
+        return true
+    end
+    return false
+end
+```
+
+**QBCore with qb-banking:**
+```lua copy
+Config.AddMoneyToSociety = function(societyName, amount)
+    if GetResourceState('qb-banking') == 'started' then
+        exports['qb-banking']:AddMoney(societyName, amount, 'Invoice Payment')
+        return true
+    end
+    return false
+end
+```
+
+## UI Interaction Functions
+
+Configure the text UI display functions:
+
+```lua copy
+-- Show text UI function
+Config.ShowTextUI = function(text)
+    lib.showTextUI(text)
+end
+
+-- Hide text UI function
+Config.HideTextUI = function()
+    lib.hideTextUI()
+end
+```
+
+<Callout type="info">
+  The default configuration uses ox_lib for text UI. You can customize these functions for your preferred UI system.
+</Callout>
+
+### Alternative UI Examples
+
+**QBCore Draw Text:**
+```lua copy
+Config.ShowTextUI = function(text)
+    exports['qb-core']:DrawText(text, 'left')
+end
+
+Config.HideTextUI = function()
+    exports['qb-core']:HideText()
+end
+```
+
+**ESX TextUI:**
+```lua copy
+Config.ShowTextUI = function(text)
+    ESX.ShowTextUI(text)
+end
+
+Config.HideTextUI = function()
+    ESX.HideTextUI()
+end
+```
+
+## Zone Configuration
+
+<Callout type="info">
+  Billing zones are dynamically loaded from the database. The admin panel allows you to create and manage billing companies and their zones in-game.
+</Callout>
+
+```lua copy
+-- Zones configuration (now dynamically loaded from database)
+-- This is kept as a fallback/example structure
+Config.DefaultZones = {}
+```
+
+Zones are managed through the in-game admin panel where you can:
+- Create new billing companies
+- Set up interaction zones
+- Configure products and prices
+- Manage company permissions
+
+## Important Notes
+
+<Callout type="error">
+  **Security Warning:** The default configuration has placeholders that MUST be customized:
+  1. `Config.IsAdmin` - Currently allows all players (change this!)
+  2. `Config.AddMoneyToSociety` - Currently only logs to console
+</Callout>
+
+Make sure to properly configure these functions for your specific server setup before using the billing system in production.

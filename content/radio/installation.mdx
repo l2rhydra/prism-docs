@@ -1,0 +1,32 @@
+import { Callout } from 'nextra/components'
+
+# Installation
+<div className='text-lg mt-2'
+    style={{
+        color: 'rgb(185, 198, 162)'
+    }}
+>Basic installation instructions for prism_radio</div>
+
+<Callout type="error">
+  **WARNING** : Resource must be named ``prism_radio`` to operate properly..
+</Callout>
+
+## Asset download
+
+<Callout type="info">
+  To find the asset, you must have made the purchase using your own keymaster account. Otherwise, you can use the transfer system to move the asset to a different keymaster account.
+</Callout>
+
+<div className='text-lg mt-5'>
+    Once the purchase is made on our official website, you will receive your asset directly in your [cfx portal](https://portal.cfx.re/) in your own panel you can download the asset and install it following the following documentation.
+</div>
+
+## Installation
+
+**Note:** The SQL is being installed automatically upon startup, but we still left the .sql installation file in `install/sql.sql`
+
+- **Ensure all dependencies are installed** [ [ox_lib](https://github.com/communityox/ox_lib/releases) [pma-voice](https://github.com/AvarianKnight/pma-voice/releases) ]
+- **Edit configuration as desired** (Optional)
+- **Drag-and-drop our script** : Drag `prism_radio` in to your `resources` directory and add `ensure prism_radio` to your `server.cfg` after all dependencies.
+- **If you are using ox_inventory:** Go to `install/items/` and copy the content of `ox_inventory.md` and paste it into your `ox_inventory/data/items.lua`. Also add the radio.png image into `ox_inventory/web/images`
+- **Restart your server**.

@@ -1,0 +1,225 @@
+# Config
+
+<div className='text-lg mt-2'
+    style={{
+        color: 'rgb(185, 198, 162)'
+    }}
+>All Prism Scripts contain various editable and unobscured files containing, exports, client<br/> and server functions, configuration methods and more.</div>
+
+```lua filename="config.lua" copy
+Config = {}
+
+-- Primary color for the radio UI (hex format)
+Config.PrimaryColor = '#BEEE11'
+
+Config.Locale = "en"
+
+-- Default settings for new players
+Config.DefaultSettings = {
+    color = '#BEEE11',
+    hudScale = 1.0,
+    radioScale = 1.0,
+    radioVolume = 100,
+    radioAnimation = 1,
+    hudShow = true,
+
+    -- Distance from the TOP of the screen (in %)
+    -- 0    = fully at the top edge
+    -- ↑    = higher value moves the radiolist DOWN
+    radiolist_top = 3,
+
+    -- Distance from the RIGHT of the screen (in %)
+    -- 0    = fully at the right edge
+    -- ↑    = higher value moves the radiolist LEFT
+    radiolist_right = 35,
+
+    -- Distance from the TOP of the screen (in %)
+    -- 0 = fully at the top edge
+    -- ↑    = higher value moves the radio DOWN
+    radio_top = 35,
+
+    -- Distance from the RIGHT of the screen (in %)
+    -- 0    = fully at the right edge
+    -- ↑    = higher value moves the radio LEFT
+    radio_right = 17,
+}
+
+-- Radiolist style
+-- 0 = minimalistic, white text
+-- 1 = advanced, with header
+Config.RadiolistStyle = 0
+
+-- Radio frequency range
+Config.MinFrequency = 1.0
+Config.MaxFrequency = 999.9
+
+-- Dragging allows users setting the radio & radiolist position to their preferences.
+-- Some servers want a fixed position for every player, if you are that server, set those to false.
+Config.AllowUIDragging = {
+    radiolist = true, -- Allow the dragging of radiolist by users?
+    radio = true      -- Allow the dragging of radio by users?
+}
+
+-- Key to open/close the radio
+Config.EnableCommand = true         -- if false, radio can't be opened via command/OpenKey bind. (only item if RequireItem is true)
+Config.OpenKey = 'F3'               -- Key name
+Config.OpenKeyCommand = 'openradio' -- Command name
+
+-- Enable radio item requirement (set to false for no item needed)
+Config.RequireItem = true
+Config.ItemName = 'radio' -- Item name if RequireItem is true
+
+-- Animation while using radio
+Config.UseAnimation = true
+Config.AnimDict = 'cellphone@'
+Config.AnimName = 'cellphone_text_read_base'
+
+Config.PropServerSideSpawn = true -- Should props spawn server-side?
+
+Config.RadioProp = {
+    enabled = true, -- set to false if you dont want a radio prop in your hand
+    model = "prop_cs_hand_radio",
+    bone = 28422,   -- Right hand
+    offset = vec3(0.0, 0.0, 0.0),
+    rotation = vec3(0.0, 0.0, 0.0)
+}
+
+-- Allow users to change their nickname in the radio (Default is character name, check server/framework_editable:getCharacterName for more info)
+Config.AllowNicknameChange = true
+Config.MinNicknameLength = 3
+Config.MaxNicknameLength = 20
+
+-- Automatically disconnect player from radio channel on death?
+Config.DisconnectOnDeath = true
+
+-- Animation while talking on radio (The User can pick the animations he likes the most in the settings tab)
+Config.UseTalkAnimation = true
+Config.TalkAnimations = {
+    [1] = {
+        dict = 'cellphone@',
+        anim = 'cellphone_text_to_call',
+        args = { -2.0, 2.0 },
+        prop = {
+            model = 'prop_npc_phone_02',
+            bone = 28422,
+            offset = vec3(0.0, 0.0, 0.0),
+            rotation = vec3(0.0, 0.0, 0.0),
+        }
+    },
+    [2] = {
+        dict = 'random@arrests',
+        anim = 'generic_radio_enter',
+        args = { 2.0, 2.0 }
+    },
+    [3] = {
+        dict = 'amb@code_human_police_investigate@idle_a',
+        anim = 'idle_b',
+        args = { -4.0, 2.0, -1, 49 }
+    },
+    [4] = {
+        dict = "anim@male@holding_radio",
+        anim = "holding_radio_clip",
+        args = { 2.0, 2.0 },
+        prop = {
+            model = 'prop_cs_hand_radio',
+            bone = 28422,
+            offset = vec3(0.1, 0.06, 0.01),
+            rotation = vec3(-85.0, -20.0, -50.0),
+        }
+    },
+}
+
+-- Channel password settings
+Config.AllowChannelPasswords = true
+Config.MaxPasswordLength = 20
+
+-- In seconds, is here so people don't mass-spam the canOpenRadio callbackType (Not advanced resource-intensive callbackType, but still.)
+Config.OpenCooldown = 1
+
+-- ============================================
+-- JOB/GANG RESTRICTED CHANNELS
+-- ============================================
+-- Channels that can only be accessed by specific jobs/gangs
+-- Players without the required job/gang will see "Access Denied"
+Config.RestrictedChannels = {
+    -- Police channels
+    ['1.0'] = {
+        jobs = { 'police', 'sheriff', 'fib' },
+        gangs = {},
+        label = 'Police Main',
+        minGrade = 0 -- Minimum job grade required (0 = any grade)
+    },
+    ['1.1'] = {
+        jobs = { 'police', 'sheriff' },
+        gangs = {},
+        label = 'Police Tactical',
+        minGrade = 3
+    },
+
+    -- EMS channels
+    ['2.0'] = {
+        jobs = { 'ambulance', 'doctor' },
+        gangs = {},
+        label = 'EMS Main',
+        minGrade = 0
+    },
+
+    -- Mechanic channels
+    ['3.0'] = {
+        jobs = { 'mechanic', 'bennys' },
+        gangs = {},
+        label = 'Mechanic',
+        minGrade = 0
+    },
+
+    -- Gang examples (uncomment to use)
+    -- ['50.0'] = {
+    --     jobs = {},
+    --     gangs = { 'ballas', 'vagos' },
+    --     label = 'Gang Channel',
+    --     minGrade = 0
+    -- },
+}
+
+-- ============================================
+-- RADIO EFFECTS
+-- ============================================
+Config.Effects = {
+    -- Click sound when talking on radio
+    enableClickSound = {
+        volume = 0.15, -- 0.0 - 1.0
+        self = true,   -- enable click sound when you talk
+        other = true   -- enable click sound when other talk
+    },
+    -- Connect/Disconnect sound
+    enableConnectSound = {
+        volume = 0.1, -- 0.0 - 1.0
+        self = true,  -- Enable sound when player connects to radio himself
+        other = true  -- Enable sound when other players connect to player's radio
+    },
+    enableDisconnectSound = {
+        volume = 0.1, -- 0.0 - 1.0
+        self = true,  -- Enable sound when player disconnects from radio
+        other = true  -- Enable sound when other players disconnect from player's radio
+    }
+}
+
+-- ============================================
+-- PERMISSIONS
+-- ============================================
+Config.Permissions = {
+    -- Ace permission to bypass all restrictions
+    adminBypass = 'prism_radio.admin',
+    -- Ace permission to manage channels
+    manageChannels = 'prism_radio.manage'
+}
+
+-- Framework detection ('auto', 'qb-core', 'esx', 'qbx', 'standalone')
+Config.Framework = 'auto'
+
+-- Inventory detection ('auto', 'ox_inventory', 'qs-inventory')
+Config.Inventory = "auto"
+
+-- Debug mode
+Config.Debug = true
+```
