@@ -1,0 +1,86 @@
+import { Callout } from 'nextra/components'
+
+# Installation
+
+<div className='text-lg mt-2'
+    style={{
+        color: 'rgb(185, 198, 162)'
+    }}
+>Basic installation instructions for prism_outfitbag</div>
+
+## Asset download
+
+<Callout type="info">
+  To find the asset, you must have made the purchase using your own keymaster account. Otherwise, you can use the transfer system to move the asset to a different keymaster account.
+</Callout>
+
+<div className='text-lg mt-5'>
+    Once the purchase is made on our official website, you will receive your asset directly in your [cfx portal](https://portal.cfx.re/) in your own panel you can download the asset and install it following the following documentation.
+</div>
+
+## Dependencies
+
+Make sure you have the following resources installed and running before starting `prism_outfitbag`:
+
+- **ox_lib** — Required for shared library functions
+- **oxmysql** — Required for database operations
+- **ox_target** or **qb-target** — Required for bag interaction
+- **Framework** — QBCore, QBX, or ESX
+
+<Callout type="warning">
+  You must also have a supported appearance system installed. See the [Config](/outfitbag/config) page for the full list of supported appearance systems.
+</Callout>
+
+## Database Setup
+
+The resource will automatically create the required database table on first start:
+
+```sql copy
+CREATE TABLE IF NOT EXISTS `prism_outfits` (
+    `id` INT NOT NULL AUTO_INCREMENT,
+    `identifier` VARCHAR(60) NOT NULL,
+    `outfitname` VARCHAR(50) NOT NULL,
+    `outfit` LONGTEXT NOT NULL,
+    PRIMARY KEY (`id`),
+    INDEX `identifier` (`identifier`)
+);
+```
+
+## Item Configuration (optional)
+
+If you want players to use an inventory item to place outfit bags, add the following item to your inventory system.
+
+### ox_inventory
+
+```lua copy
+["outfit_bag"] = {
+    label = "Outfit Bag",
+    weight = 500,
+    stack = false,
+    close = true,
+    description = "A bag to store and manage your outfits",
+},
+```
+
+### qb-core shared items
+
+```lua copy
+["outfit_bag"] = {
+    name = "outfit_bag",
+    label = "Outfit Bag",
+    weight = 500,
+    type = "item",
+    image = "outfit_bag.png",
+    unique = false,
+    useable = true,
+    shouldClose = true,
+    description = "A bag to store and manage your outfits"
+},
+```
+
+## Installation
+
+- **Drag `prism_outfitbag` into your resources directory**
+- **Add `ensure prism_outfitbag`** to your `server.cfg`
+- **Edit configuration as desired** — See [Config](/outfitbag/config) for all options
+- **Restart your server**

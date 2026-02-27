@@ -1,0 +1,115 @@
+# Config
+
+<div className='text-lg mt-2'
+    style={{
+        color: 'rgb(185, 198, 162)'
+    }}
+>All Prism Scripts contain various editable and unobscured files containing, exports, client<br/> and server functions, configuration methods and more.</div>
+
+```lua filename="config.lua" copy
+
+Config = {}
+
+Config.Framework = 'qbx' -- 'qbx' or 'qb' or 'esx'
+
+Config.Cooldown = 10 -- Seconds between scratch card uses
+Config.SessionTimeout = 120 -- Seconds before an unfinished session expires
+Config.MoneyType = 'cash' -- 'cash' or 'bank'
+
+Config.Tiers = {
+    standard = {
+        item = 'scratch_card',
+        primaryColor = '#4CAF50',
+        label = 'STANDARD',
+        luckyNumberCount = 4,
+        cellCount = 9,
+        numberRange = {1, 50},
+        winChance = 0.08,
+        prizes = { '$1','$1','$2','$2','$5','$5','$10','$10','$15','$20','$25','$50' },
+    },
+    premium = {
+        item = 'scratch_card_premium',
+        primaryColor = '#BEEE11',
+        label = 'PREMIUM',
+        luckyNumberCount = 4,
+        cellCount = 9,
+        numberRange = {1, 50},
+        winChance = 0.1,
+        prizes = { '$5','$5','$10','$10','$15','$15','$20','$25','$50','$75','$100','$250','$500','$1000' },
+    },
+    vip = {
+        item = 'scratch_card_vip',
+        primaryColor = '#FFD700',
+        label = 'VIP',
+        luckyNumberCount = 5,
+        cellCount = 9,
+        numberRange = {1, 40},
+        winChance = 0.15,
+        prizes = { '$50','$50','$100','$100','$250','$250','$500','$500','$1000','$2500','$5000' },
+    },
+}
+
+Config.Translation = {
+    confirmTitle = 'READY TO SCRATCH?',
+    confirmBody = "Once you start scratching, there's no going back. Reveal all cells to claim your prize.",
+    confirmButton = "LET'S GO",
+    declineButton = 'Not now',
+    cardSubtitle = 'SCRATCH CARD',
+    luckyNumbers = 'Lucky Numbers',
+    totalWon = 'Total Won',
+}
+
+```
+
+## Config Options Explained
+
+### Framework
+Set your server's framework. Supported values:
+- `'qbx'` — QBX Core (new QBCore)
+- `'qb'` — QBCore
+- `'esx'` — ESX Legacy
+
+### General Settings
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `Cooldown` | number | `10` | Seconds a player must wait between scratch card uses |
+| `SessionTimeout` | number | `120` | Seconds before an unfinished scratch session expires and is cleaned up |
+| `MoneyType` | string | `'cash'` | Where winnings are paid — `'cash'` or `'bank'` |
+
+### Tier System
+
+Each tier defines a scratch card type with its own item, appearance, odds, and prizes. You can add, remove, or modify tiers.
+
+| Option | Description |
+|--------|-------------|
+| `item` | The inventory item name that triggers this tier |
+| `primaryColor` | Hex color used for the scratch card UI theme |
+| `label` | Display name shown on the scratch card |
+| `luckyNumberCount` | How many lucky numbers are drawn (more = higher chance of matching) |
+| `cellCount` | Total number of scratch cells (always 9 for a 3x3 grid) |
+| `numberRange` | Min and max range for generated numbers (e.g., `{1, 50}`) |
+| `winChance` | Probability per cell to be a winner (0.08 = 8%, 0.10 = 10%, 0.15 = 15%) |
+| `prizes` | Pool of prize values randomly assigned to winning cells |
+
+### Default Tiers
+
+| Tier | Item | Color | Lucky Numbers | Number Range | Win Chance | Prize Range |
+|------|------|-------|---------------|-------------|------------|-------------|
+| **Standard** | `scratch_card` | Green | 4 | 1–50 | 8% | $1 – $50 |
+| **Premium** | `scratch_card_premium` | Yellow | 4 | 1–50 | 10% | $5 – $1,000 |
+| **VIP** | `scratch_card_vip` | Gold | 5 | 1–40 | 15% | $50 – $5,000 |
+
+### Translations
+
+All UI text is configurable via `Config.Translation`. Modify these values to localize the scratch card interface to your server's language.
+
+| Key | Default | Description |
+|-----|---------|-------------|
+| `confirmTitle` | `'READY TO SCRATCH?'` | Title on the confirmation modal |
+| `confirmBody` | `"Once you start scratching..."` | Body text on the confirmation modal |
+| `confirmButton` | `"LET'S GO"` | Primary button text |
+| `declineButton` | `'Not now'` | Cancel button text |
+| `cardSubtitle` | `'SCRATCH CARD'` | Subtitle displayed on the card |
+| `luckyNumbers` | `'Lucky Numbers'` | Label for the lucky numbers section |
+| `totalWon` | `'Total Won'` | Label for the total winnings display |

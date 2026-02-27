@@ -1,0 +1,106 @@
+import { Callout } from 'nextra/components'
+
+# Installation
+
+<div className='text-lg mt-2'
+    style={{
+        color: 'rgb(185, 198, 162)'
+    }}
+>Basic installation instructions for prism_scratchcard</div>
+
+## Asset download
+
+<Callout type="info">
+  To find the asset, you must have made the purchase using your own keymaster account. Otherwise, you can use the transfer system to move the asset to a different keymaster account.
+</Callout>
+
+<div className='text-lg mt-5'>
+    Once the purchase is made on our official website, you will receive your asset directly in your [cfx portal](https://portal.cfx.re/) in your own panel you can download the asset and install it following the following documentation.
+</div>
+
+## Dependencies
+
+Make sure you have the following resources installed and running before starting `prism_scratchcard`:
+
+- **ox_lib** — Required for notifications
+- **Framework** — QBCore, QBX, or ESX
+
+## Item Configuration
+
+You need to add scratch card items to your inventory system for each tier you want to use.
+
+### ox_inventory
+
+```lua copy
+["scratch_card"] = {
+    label = "Scratch Card",
+    weight = 100,
+    stack = true,
+    close = true,
+    description = "A standard scratch card - scratch to win!",
+},
+
+["scratch_card_premium"] = {
+    label = "Premium Scratch Card",
+    weight = 100,
+    stack = true,
+    close = true,
+    description = "A premium scratch card with better prizes!",
+},
+
+["scratch_card_vip"] = {
+    label = "VIP Scratch Card",
+    weight = 100,
+    stack = true,
+    close = true,
+    description = "An exclusive VIP scratch card with the best prizes!",
+},
+```
+
+### qb-core shared items
+
+```lua copy
+["scratch_card"] = {
+    name = "scratch_card",
+    label = "Scratch Card",
+    weight = 100,
+    type = "item",
+    image = "scratch_card.png",
+    unique = false,
+    useable = true,
+    shouldClose = true,
+    description = "A standard scratch card - scratch to win!"
+},
+
+["scratch_card_premium"] = {
+    name = "scratch_card_premium",
+    label = "Premium Scratch Card",
+    weight = 100,
+    type = "item",
+    image = "scratch_card_premium.png",
+    unique = false,
+    useable = true,
+    shouldClose = true,
+    description = "A premium scratch card with better prizes!"
+},
+
+["scratch_card_vip"] = {
+    name = "scratch_card_vip",
+    label = "VIP Scratch Card",
+    weight = 100,
+    type = "item",
+    image = "scratch_card_vip.png",
+    unique = false,
+    useable = true,
+    shouldClose = true,
+    description = "An exclusive VIP scratch card with the best prizes!"
+},
+```
+
+## Installation
+
+- **Drag `prism_scratchcard` into your resources directory**
+- **Add `ensure prism_scratchcard`** to your `server.cfg`
+- **Add the scratch card items** to your inventory system as shown above
+- **Edit configuration as desired** — See [Config](/scratchcard/config) for all options
+- **Restart your server**

@@ -189,4 +189,22 @@ export default {
       collapsed: true
     },
   },
+  outfitbag: {
+    title: '👜 Prism Outfit Bag',
+    theme: {
+      breadcrumb: false,
+      pagination: true,
+      copyPage: false,
+      collapsed: true
+    },
+  },
+  scratchcard: {
+    title: '🎰 Prism Scratch Card',
+    theme: {
+      breadcrumb: false,
+      pagination: true,
+      copyPage: false,
+      collapsed: true
+    },
+  },
 }
