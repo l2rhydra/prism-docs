@@ -47,7 +47,8 @@ Config.DefaultSettings = {
 -- Radiolist style
 -- 0 = minimalistic, white text
 -- 1 = advanced, with header
-Config.RadiolistStyle = 0
+-- 2 = disabled, use this if you have your own radiolist
+Config.RadiolistStyle = 1
 
 -- Radio frequency range
 Config.MinFrequency = 1.0
@@ -74,7 +75,7 @@ Config.UseAnimation = true
 Config.AnimDict = 'cellphone@'
 Config.AnimName = 'cellphone_text_read_base'
 
-Config.PropServerSideSpawn = true -- Should props spawn server-side?
+Config.PropServerSideSpawn = false -- Should props spawn server-side?
 
 Config.RadioProp = {
     enabled = true, -- set to false if you dont want a radio prop in your hand
@@ -222,4 +223,5 @@ Config.Inventory = "auto"
 
 -- Debug mode
 Config.Debug = true
+
 ```
