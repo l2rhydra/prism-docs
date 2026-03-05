@@ -50,6 +50,11 @@ Config.DefaultSettings = {
 -- 2 = disabled, use this if you have your own radiolist
 Config.RadiolistStyle = 1
 
+-- Which jobs should not see the radiolist.
+Config.RadiolistJobBlacklist = {
+    -- ["police"] = true
+}
+
 -- Radio frequency range
 Config.MinFrequency = 1.0
 Config.MaxFrequency = 999.9
@@ -68,7 +73,13 @@ Config.OpenKeyCommand = 'openradio' -- Command name
 
 -- Enable radio item requirement (set to false for no item needed)
 Config.RequireItem = true
-Config.ItemName = 'radio' -- Item name if RequireItem is true
+Config.ItemName = {
+    "radio"
+} -- Item name if RequireItem is true (you can add multiple)
+
+-- Automatically disconnect player from radio channel if they no longer
+-- have any of the required radio items in their inventory
+Config.DisconnectOnNoItem = true
 
 -- Animation while using radio
 Config.UseAnimation = true
