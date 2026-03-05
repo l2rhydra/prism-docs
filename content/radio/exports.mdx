@@ -46,6 +46,32 @@ exports['prism_radio']:getCurrentFrequency()
 
 ---
 
+#### `disconnectRadio`
+
+Disconnect from the current radio channel if connected.
+
+```lua copy
+exports['prism_radio']:disconnectRadio()
+```
+
+---
+
+#### `connectRadio`
+
+Connect to a radio channel, with optional password and nickname override.
+
+```lua copy
+exports['prism_radio']:connectRadio(frequency, password, name)
+```
+
+**Parameters**
+
+- `frequency` (`number | string`) — The channel to connect to (can be a number or string)
+- `password` (`string | nil`) — Password for the channel if it is protected (you must handle collecting this from the user, e.g. via an `ox_lib` input)
+- `name` (`string | nil`) — Nickname to connect with; if `nil`, the character name is used as usual
+
+---
+
 #### `openRadio`
 
 Open the radio UI.
@@ -132,4 +158,74 @@ exports['prism_radio']:getRadioNickname()
 
 **Returns**
 
-- `string?` String if username is on radio & has a nickname
+- `string?` — `string` if player is on radio & has a custom nickname, otherwise `nil`
+
+---
+
+## Events & State
+
+### Client Events
+
+#### `prism_radio:nicknameUpdated`
+
+Triggered when the local player's radio nickname changes.
+
+```lua copy
+AddEventHandler('prism_radio:nicknameUpdated', function(radioNickname)
+    -- radioNickname: string | nil
+end)
+```
+
+**Parameters**
+
+- `radioNickname` (`string | nil`) — The new nickname if the player has set one, otherwise `nil`
+
+---
+
+### Server Events
+
+#### `prism_radio:nicknameUpdated`
+
+Triggered when a player's radio nickname changes on the server.
+
+```lua copy
+AddEventHandler('prism_radio:nicknameUpdated', function(playerId, radioNickname)
+    -- playerId: number
+    -- radioNickname: string | nil
+end)
+```
+
+**Parameters**
+
+- `playerId` (`number`) — The player's server ID
+- `radioNickname` (`string | nil`) — The new nickname if the player has set one, otherwise `nil`
+
+---
+
+### State Bags
+
+#### `LocalPlayer.state.radioNickname`
+
+Holds the local player's current radio nickname.
+
+```lua copy
+local nickname = LocalPlayer.state.radioNickname -- string | nil
+```
+
+**Type**
+
+- `string | nil` — `string` if the player has a custom nickname, otherwise `nil`
+
+---
+
+#### `Player(serverId).state.radioNickname`
+
+Holds another player's current radio nickname.
+
+```lua copy
+local nickname = Player(serverId).state.radioNickname -- string | nil
+```
+
+**Type**
+
+- `string | nil` — `string` if the player has a custom nickname, otherwise `nil`
