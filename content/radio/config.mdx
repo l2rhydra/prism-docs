@@ -115,6 +115,9 @@ Config.DisableSettings = false
 -- Automatically disconnect player from radio channel on death?
 Config.DisconnectOnDeath = true
 
+-- Allow opening the radio while being dead?
+Config.AllowUseWhileDead = false
+
 -- Animation while talking on radio (The User can pick the animations he likes the most in the settings tab)
 Config.UseTalkAnimation = true
 Config.AllowChange = true -- Allow users to change talk animation in settings?
@@ -149,6 +152,17 @@ Config.TalkAnimations = {
             bone = 28422,
             offset = vec3(0.1, 0.06, 0.01),
             rotation = vec3(-85.0, -20.0, -50.0),
+        }
+    },
+    [5] = {
+        dict = "cellphone@",
+        anim = "cellphone_call_listen_base",
+        args = { 2.0, 2.0, -1, 49 },
+        prop = {
+            model = "prop_cs_hand_radio",
+            bone = 28422,
+            offset = vec3(0.0, 0.0, 0.0),
+            rotation = vec3(0.0, 0.0, 0.0),
         }
     },
 }
@@ -246,6 +260,4 @@ Config.Inventory = "auto"
 
 -- Debug mode
 Config.Debug = true
-
-
 ```
